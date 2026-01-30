@@ -207,7 +207,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 356eab94464f3ed47bfa5bbe8706f2e0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
-  move: {x: 1, y: 0, z: 0}
+  move: {x: 3, y: 0, z: 0}
 --- !u!61 &732463996
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -432,7 +432,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 356eab94464f3ed47bfa5bbe8706f2e0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MoveLeftScript
-  move: {x: 1, y: 0, z: 0}
+  move: {x: 3, y: 0, z: 0}
 --- !u!114 &1478127770
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -877,6 +877,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2053511583143181974, guid: 2c9349cfa14af844687209928a86d97b, type: 3}
+      propertyPath: jumpForce
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 2053511583143181974, guid: 2c9349cfa14af844687209928a86d97b, type: 3}
+      propertyPath: moveSpeed
+      value: 7
+      objectReference: {fileID: 0}
     - target: {fileID: 4443070262712555240, guid: 2c9349cfa14af844687209928a86d97b, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -916,6 +924,14 @@ PrefabInstance:
     - target: {fileID: 4443070262712555240, guid: 2c9349cfa14af844687209928a86d97b, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7330170256330553469, guid: 2c9349cfa14af844687209928a86d97b, type: 3}
+      propertyPath: m_Mass
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7330170256330553469, guid: 2c9349cfa14af844687209928a86d97b, type: 3}
+      propertyPath: m_GravityScale
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 9069563807208065718, guid: 2c9349cfa14af844687209928a86d97b, type: 3}
       propertyPath: m_Name
