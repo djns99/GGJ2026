@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -9,6 +10,8 @@ public class PlayerController : MonoBehaviour
     [Header("Jumping")]
     [Tooltip("Initial jump velocity (units/sec)")]
     public float jumpVelocity = 12f;
+    [Tooltip("Maximum number of jumps allowed (0 = no jumping, 1 = single jump, 2 = double jump, etc.)")]
+    public int maxJumps = 2;
 
     [Tooltip("Transform used to check for ground. If null, player's position will be used.")]
     public Transform groundCheck;
@@ -26,36 +29,33 @@ public class PlayerController : MonoBehaviour
     private bool wasGrounded;
     private bool isGrounded;
 
+    // track which colliders currently count as ground contacts
+    private readonly HashSet<Collider2D> groundContacts = new HashSet<Collider2D>();
+
+    // jump state
+    private int jumpsRemaining;
+
     void Start()
     {
         rb2d = GetComponent<Rigidbody2D>();
         if (rb2d == null)
             Debug.LogWarning("PlayerController: no Rigidbody2D found — falling back to Transform movement.");
+
+        // initialize jumps available
+        jumpsRemaining = Mathf.Max(0, maxJumps);
     }
 
     void Update()
     {
-        // Ground check (use groundCheck if assigned)
-        Vector2 checkPos = groundCheck != null ? (Vector2)groundCheck.position : (Vector2)transform.position;
-
-        // perform the overlap and capture the returned collider (if any)
-        Collider2D hit = Physics2D.OverlapCircle(checkPos, groundCheckRadius, groundLayer);
-        bool groundedNow = hit != null;
-
-        // update state
+        // update grounded state from collision-driven contacts
         wasGrounded = isGrounded;
-        isGrounded = groundedNow;
+        isGrounded = groundContacts.Count > 0;
 
-        // Detailed debug to help diagnose why ground detection may fail.
-        // This logs the check position, radius, the LayerMask value, and the collider found (if any).
-        if (!groundedNow)
+        // Reset jumps only on landing (transition from air -> ground)
+        if (!wasGrounded && isGrounded)
         {
-            Debug.Log($"GroundCheck: NO HIT at pos={checkPos}, radius={groundCheckRadius}, layerMask={groundLayer.value}. " +
-                      $"Make sure ground has a Collider2D (e.g. BoxCollider2D), is on a layer included in the mask, and groundCheck is at the feet.");
-        }
-        else
-        {
-            Debug.Log($"GroundCheck: HIT '{hit.name}' (layer={hit.gameObject.layer}) at pos={checkPos}, radius={groundCheckRadius}");
+            jumpsRemaining = Mathf.Max(0, maxJumps);
+            Debug.Log($"Landed: reset jumps to {jumpsRemaining}");
         }
 
         // log when we leave the ground (transition grounded -> not grounded)
@@ -65,12 +65,6 @@ public class PlayerController : MonoBehaviour
                 Debug.Log($"Left ground: airborne. linearVelocity={rb2d.linearVelocity}");
             else
                 Debug.Log("Left ground: airborne (no Rigidbody2D)");
-        }
-
-        // optional: log landing
-        if (!wasGrounded && isGrounded)
-        {
-            Debug.Log("Landed: back on ground.");
         }
     }
 
@@ -122,7 +116,7 @@ public class PlayerController : MonoBehaviour
         Debug.Log("OnMoveCanceled: move input canceled");
     }
 
-    // Simple jump: immediate jump when grounded
+    // Multi-jump: immediate jump when jumpsRemaining > 0
     // Called by PlayerInput when Jump action is performed (button press)
     public void OnJump(InputValue value)
     {
@@ -138,23 +132,31 @@ public class PlayerController : MonoBehaviour
 
         if (v > 0.5f)
         {
-            if (isGrounded)
+            if (maxJumps <= 0)
+            {
+                Debug.Log("Jump input ignored: maxJumps <= 0 (jumping disabled).");
+                return;
+            }
+
+            if (jumpsRemaining > 0)
             {
                 if (rb2d != null)
                 {
                     rb2d.linearVelocity = new Vector2(rb2d.linearVelocity.x, jumpVelocity);
-                    Debug.Log($"Jumped: velocity set to {jumpVelocity}");
+                    jumpsRemaining--;
+                    Debug.Log($"Jumped: velocity set to {jumpVelocity}. jumpsRemaining={jumpsRemaining}/{maxJumps}");
                 }
                 else
                 {
                     // simple transform-based fallback: small upward translation
                     transform.Translate(Vector3.up * 0.2f, Space.World);
-                    Debug.Log("Jumped (transform fallback)");
+                    jumpsRemaining = Mathf.Max(0, jumpsRemaining - 1);
+                    Debug.Log($"Jumped (transform fallback). jumpsRemaining={jumpsRemaining}/{maxJumps}");
                 }
             }
             else
             {
-                Debug.Log("Jump pressed but not grounded (no buffer/coyote).");
+                Debug.Log("Jump pressed but no jumps remaining.");
             }
         }
         else
@@ -164,7 +166,57 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    // Draw ground check sphere in editor
+    // Collision-driven ground detection
+    void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (!IsOnGroundLayer(collision.gameObject))
+            return;
+
+        // check contacts for upward-facing normal (we hit ground from above)
+        foreach (var contact in collision.contacts)
+        {
+            if (contact.normal.y > 0.5f)
+            {
+                if (groundContacts.Add(collision.collider))
+                {
+                    Debug.Log($"OnCollisionEnter2D: added ground contact '{collision.collider.name}'. totalGroundContacts={groundContacts.Count}");
+                }
+                break;
+            }
+        }
+    }
+
+    void OnCollisionExit2D(Collision2D collision)
+    {
+        if (groundContacts.Remove(collision.collider))
+        {
+            Debug.Log($"OnCollisionExit2D: removed ground contact '{collision.collider.name}'. totalGroundContacts={groundContacts.Count}");
+        }
+    }
+
+    // Optional: support trigger-based ground (if you use trigger colliders for ground)
+    void OnTriggerEnter2D(Collider2D other)
+    {
+        if (!IsOnGroundLayer(other.gameObject))
+            return;
+
+        // crude trigger handling: add trigger as ground contact
+        if (groundContacts.Add(other))
+            Debug.Log($"OnTriggerEnter2D: added ground trigger '{other.name}'. totalGroundContacts={groundContacts.Count}");
+    }
+
+    void OnTriggerExit2D(Collider2D other)
+    {
+        if (groundContacts.Remove(other))
+            Debug.Log($"OnTriggerExit2D: removed ground trigger '{other.name}'. totalGroundContacts={groundContacts.Count}");
+    }
+
+    private bool IsOnGroundLayer(GameObject go)
+    {
+        return (groundLayer.value & (1 << go.layer)) != 0;
+    }
+
+    // Draw ground check sphere in editor (kept for visual aid if you still want it)
     void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.yellow;
