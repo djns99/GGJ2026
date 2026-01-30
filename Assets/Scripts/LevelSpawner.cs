@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System;
 
 using SectionTuple = System.Tuple<UnityEngine.GameObject, UnityEngine.GameObject, UnityEngine.GameObject>;
+using Unity.VisualScripting;
 public class LevelSpawner : MonoBehaviour
 {
 
@@ -57,6 +58,11 @@ public class LevelSpawner : MonoBehaviour
 
     GameObject attachObstacle(GameObject parent, GameObject currentFloor, SectionTuple lastSection)
     {
+        // Skip obstacle on the first item, or if the previous obstacle was wide
+        if(lastSection == null || (lastSection.Item3 != null && lastSection.Item3.tag == "wide"))
+        {
+            return null; // Previous obstacle is extra wide
+        }
         // TODO filter out incompatable combinations
         var obstacleType = pickRandomItem(obstacleTypes);
         var obstacle = Instantiate(obstacleType, parent.transform);
