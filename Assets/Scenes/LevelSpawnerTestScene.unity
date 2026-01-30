@@ -926,10 +926,6 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7330170256330553469, guid: 2c9349cfa14af844687209928a86d97b, type: 3}
-      propertyPath: m_Mass
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7330170256330553469, guid: 2c9349cfa14af844687209928a86d97b, type: 3}
       propertyPath: m_GravityScale
       value: 3
       objectReference: {fileID: 0}
