@@ -148,14 +148,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1b0a5bd0d33324040af9b8dc11b0f69e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LevelSpawner
-  spawnables:
+  parentType: {fileID: 6969640731369420136, guid: d16e97de4ac82b84798506ee9d065762, type: 3}
+  floorTypes:
   - {fileID: 1548526099}
-  - {fileID: 1750346713}
+  obstacleTypes:
+  - {fileID: 2082411221342535336, guid: 3c2baeadb533d8144b1edc689ebb68f5, type: 3}
+  - {fileID: 6820308591656483031, guid: 22b6cfd02774b544a972f9205156f219, type: 3}
   chaserTransform: {fileID: 732463999}
   cameraObject: {fileID: 1478127767}
   spawnBuffer: 10
-  despawnBuffer: 1
-  defaultSpawnPoint: {x: 0, y: -5, z: 0}
+  despawnBuffer: 30
+  defaultSpawnPoint: {x: 0, y: 2, z: 0}
 --- !u!4 &710483436
 Transform:
   m_ObjectHideFlags: 0
@@ -385,7 +388,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 5
+  orthographic size: 10
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -410,7 +413,7 @@ Transform:
   m_GameObject: {fileID: 1478127765}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1, z: -10}
+  m_LocalPosition: {x: 0, y: 0, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
