@@ -429,8 +429,8 @@ GameObject:
   - component: {fileID: 1422992951}
   - component: {fileID: 1422992953}
   m_Layer: 0
-  m_Name: PixelBalloon1
-  m_TagString: Untagged
+  m_Name: Player
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -449,6 +449,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PlayerController
   moveSpeed: 5
   jumpVelocity: 4.3
+  maxJumps: 2
   groundCheck: {fileID: 1004044401}
   groundCheckRadius: 1.43
   groundLayer:
