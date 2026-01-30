@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 8e2426e0a2fafcd43921083e4266826f
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 9100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 213049
+  packageName: Doctor's 2D pack
+  packageVersion: 1.0
+  assetPath: Assets/Doctor_Pack02/Animation/Doctor_02/Others/Doc02_Death_0.controller
+  uploadId: 479437
