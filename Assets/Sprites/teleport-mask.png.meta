@@ -1,5 +1,9 @@
 fileFormatVersion: 2
-guid: 0c1cc0f4f817e58459e9cdead971c796
+<<<<<<<< HEAD:Assets/Sprites/Start_Screen_BG.png.meta
+guid: 6ccfee5b05b8daa4c9377cde0e9e451b
+========
+guid: 7694ede722d2cdc40a776874660887e4
+>>>>>>>> refs/remotes/origin/main:Assets/Sprites/teleport-mask.png.meta
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
