@@ -31,6 +31,9 @@ public class PlayerController : MonoBehaviour
     public int segments = 50;
     public GameObject teleportEffectPrefab; // Drag your prefab here
 
+    private Animator anim;
+    private SpriteRenderer spriteRenderer;
+
     private Rigidbody2D rb;
     private Camera mainCamera;
     private float moveInput;
@@ -45,6 +48,8 @@ public class PlayerController : MonoBehaviour
     {
         rb = GetComponent<Rigidbody2D>();
         mainCamera = Camera.main;
+        anim = GetComponent<Animator>(); // Get the Animator
+        spriteRenderer = GetComponent<SpriteRenderer>(); // Get the SpriteRenderer
     }
     void Start()
     {
@@ -90,6 +95,20 @@ public class PlayerController : MonoBehaviour
 
         // 3. Update Teleport Range Visual
         UpdateRangeVisual();
+
+        // 4. Animation and Sprite Flipping
+        // We use Mathf.Abs so that moving left (-1) still counts as "Speed 1"
+        anim.SetFloat("Speed", Mathf.Abs(moveInput));
+
+        // Flip the sprite based on the direction of movement
+        if (moveInput > 0)
+        {
+            spriteRenderer.flipX = false; // Facing Right
+        }
+        else if (moveInput < 0)
+        {
+            spriteRenderer.flipX = true; // Facing Left
+        }
     }
     // Update the LineRenderer to show teleport range
     private void UpdateRangeVisual()
@@ -219,5 +238,15 @@ public class PlayerController : MonoBehaviour
         // Visualizing the teleport range in the editor
         Gizmos.color = Color.cyan;
         Gizmos.DrawWireSphere(transform.position, maxTeleportDistance);
+
+        // 2. Visualize the actual Player Collider (The "Physical" body)
+        BoxCollider2D collider = GetComponent<BoxCollider2D>();
+        if (collider != null)
+        {
+            Gizmos.color = Color.yellow;
+            // This draws a box exactly where the physics engine thinks your body is
+            Vector3 colliderPos = transform.TransformPoint(collider.offset);
+            Gizmos.DrawWireCube(colliderPos, collider.size);
+        }
     }
 }
