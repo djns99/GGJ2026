@@ -45,6 +45,8 @@ GameObject:
   - component: {fileID: 7330170256330553469}
   - component: {fileID: 4568869788648208681}
   - component: {fileID: 254526944884336244}
+  - component: {fileID: 6328950347216396001}
+  - component: {fileID: 7257763414560396336}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -142,7 +144,7 @@ MonoBehaviour:
   moveSpeed: 7
   acceleration: 50
   jumpForce: 12
-  maxJumps: 2
+  maxJumps: 1
   coyoteTime: 0.15
   jumpBufferTime: 0.15
   groundCheck: {fileID: 1165097364070006422}
@@ -253,3 +255,30 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 0.18, y: 0.19}
   m_EdgeRadius: 0
+--- !u!114 &6328950347216396001
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9069563807208065718}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: deb3ea6457875894ebfd1240f6887f9c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DoubleJumpMask
+  maskLevel: 12
+--- !u!114 &7257763414560396336
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9069563807208065718}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b6de724bb25a4e4aa98f7a309e772cc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MaskSwapper
+  maskId: -1
+  player: {fileID: 9069563807208065718}
