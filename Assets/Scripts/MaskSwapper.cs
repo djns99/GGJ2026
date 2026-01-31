@@ -1,6 +1,8 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
 using UnityEngine.UIElements;
@@ -80,9 +82,15 @@ public class MaskSwapper : MonoBehaviour
         }
     }
 
-    public void ProcessMaskRequest(int i, InputValue v)
+    public void OnPointerDownDelegate(PointerEventData data)
     {
-        if (v.isPressed && maskId != i && i < imasks.Count && imasks[i].CanApply(player))
+        Debug.Log("Clicked");
+        GetComponent<MaskSwapper>().ProcessMaskRequest(Int32.Parse(gameObject.name.Last().ToString()) - 1, false);
+    }
+
+    public void ProcessMaskRequest(int i, bool enabled)
+    {
+        if (enabled && maskId != i && i < imasks.Count && imasks[i].CanApply(player))
         {
             removeCurrentMask();
             imasks[i].ApplyAbilities(player);
@@ -94,21 +102,21 @@ public class MaskSwapper : MonoBehaviour
 
     public void OnMask1(InputValue context)
     {
-        ProcessMaskRequest(0, context);
+        ProcessMaskRequest(0, context.isPressed);
     }
 
     public void OnMask2(InputValue context)
     {
-        ProcessMaskRequest(1, context);
+        ProcessMaskRequest(1, context.isPressed);
     }
 
     public void OnMask3(InputValue context)
     {
-        ProcessMaskRequest(2, context);
+        ProcessMaskRequest(2, context.isPressed);
     }
     public void OnMask4(InputValue context)
     {
-        ProcessMaskRequest(3, context);
+        ProcessMaskRequest(3, context.isPressed);
     }
 }
 
