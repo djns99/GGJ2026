@@ -1,6 +1,30 @@
-gamejam
-gamejam
 
-dialogue on pickup
-sounds/soundtracks
+
+---Scene, a complicated looking TRU YU form appears---
+
+prompt: you need to fill out your identity form to proceed
+
+click form:
+
+error:
+oops! you need to fill out a consent form to complete this process!
+
+consent form appears:
+
+click form:
+
+oops! you need to fill out an identity form to complete this process!
+
+Identity form appears again, alongside a big button saying RUN
+
+Identity Form button continues loop
+Run button starts game
+
+on start:
+
+HE DOESN'T KNOW WHO HE IS, GET HIM!!!!!
+
+
+
+
 
