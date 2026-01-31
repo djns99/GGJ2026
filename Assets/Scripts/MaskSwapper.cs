@@ -106,7 +106,8 @@ public class MaskSwapper : MonoBehaviour
         var pointClicked = (PointerEventData)maskClicked;
         var gameObjectClicked = pointClicked.pointerClick;
         Debug.Log("Clicked " + gameObjectClicked.name);
-        GetComponent<MaskSwapper>().ProcessMaskRequest(Int32.Parse(gameObjectClicked.name.Last().ToString()) - 1, true);
+        if (gameObjectClicked != null)
+            GetComponent<MaskSwapper>().ProcessMaskRequest(Int32.Parse(gameObjectClicked.name.Last().ToString()) - 1, true);
     }
 
     public void ProcessMaskRequest(int i, bool enabled)
