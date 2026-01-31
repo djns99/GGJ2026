@@ -24,7 +24,7 @@ public class TeleportMask : MonoBehaviour, Mask
 
     public Sprite GetSprite()
     {
-        return Resources.Load<Sprite>("TeleportMaskSprite");
+        return Resources.Load<Sprite>("Sprites/TeleportMaskSprite");
     }
 
     public void RemoveAbilities(GameObject player)

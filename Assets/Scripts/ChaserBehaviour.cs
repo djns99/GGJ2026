@@ -7,15 +7,14 @@ using UnityEngine.UIElements;
 public class ChaserBehaviour : MonoBehaviour
 {
 
-    public float chaserSpeed = 5f;
+    public float chaserStartSpeed = 5f;
     public float chaserDelayTime = 5f;
-    private bool isColliding = false;
+    public float totalGameTime = 120f;
     private float elapsedTime = 0f;
-    GameObject player = GameObject.FindWithTag("Player");
+    public GameObject player;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-       
     }
 
     // Update is called once per frame
@@ -23,23 +22,15 @@ public class ChaserBehaviour : MonoBehaviour
     {
         elapsedTime += Time.deltaTime;
         Debug.Log("Elapsed Time: " + elapsedTime);
-        if (!isColliding && elapsedTime >= chaserDelayTime)
+        if (elapsedTime >= chaserDelayTime)
         {
             Debug.Log("Chaser Moving");
-            transform.position -= Vector3.left * chaserSpeed * Time.deltaTime;
-        }
-    }
-    private void OnCollisionEnter2D(UnityEngine.Collision2D collision)
-    {
-        Debug.Log("COLLISION!");
-        if (collision.gameObject.CompareTag("Player"))
-        {
-            isColliding = true;
-            ReloadGame();
-        }
-    }
 
-    private void ReloadGame() {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+            // TODO Get a more intelligent percentage
+            var playerController = player.GetComponent<PlayerController>();
+            float speed = Mathf.Lerp(chaserStartSpeed, 2 * player.GetComponent<PlayerController>().CurrentMaxMoveSpeed, elapsedTime / totalGameTime);
+
+            transform.position -= Vector3.left * speed * Time.deltaTime;
+        }
     }
 }

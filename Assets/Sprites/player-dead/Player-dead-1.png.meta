@@ -1,5 +1,9 @@
 fileFormatVersion: 2
+<<<<<<<< HEAD:Assets/Sprites/player-dead/Player-dead-2.png.meta
+guid: 98e1b2f0ae941a1418ac8066928af979
+========
 guid: 318090479acc7214790de10b4877b981
+>>>>>>>> refs/remotes/origin/main:Assets/Sprites/player-dead/Player-dead-1.png.meta
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
