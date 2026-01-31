@@ -268,7 +268,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   m_Size: {x: 0.94, y: 3.49}
-  m_EdgeRadius: 0
+  m_EdgeRadius: 0.01
 --- !u!114 &7257763414560396336
 MonoBehaviour:
   m_ObjectHideFlags: 0
