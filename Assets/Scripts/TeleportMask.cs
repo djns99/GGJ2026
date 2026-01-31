@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -5,10 +6,13 @@ public class TeleportMask : MonoBehaviour, Mask
 {
     public int maskId = 1;
     public int maskLevel = 1;
+    public int maskWorth = 20;
+
     public List<float> cooldownLengths = new List<float>{ 10f, 5f, 3f };
 
     public AudioClip maskMusic;
     public AudioClip GetMaskMusic() => maskMusic;
+    public static event Action<int> OnMaskCollect;
     public void ApplyAbilities(GameObject player)
     {
         var controller = player.GetComponent<PlayerController>();
@@ -39,4 +43,10 @@ public class TeleportMask : MonoBehaviour, Mask
 
     public int GetMaskId() { return maskId; }
     public void SetMaskId(int id) { maskId = id; }
+
+    public void Collect(GameObject player)
+    {
+        OnMaskCollect?.Invoke(maskWorth);
+        Debug.Log("Double Jump Mask Collected!");
+    }
 }
