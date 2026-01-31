@@ -17,7 +17,7 @@ public class DoubleJumpMask : MonoBehaviour, Mask
 
     public Sprite GetSprite()
     {
-        return Resources.Load<Sprite>("DoubleJumpMaskSprite");
+        return Resources.Load<Sprite>("Sprites/DoubleJumpMaskSprite");
     }
 
     public void RemoveAbilities(GameObject player)
