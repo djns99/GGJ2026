@@ -252,6 +252,19 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 6518145989325892656, guid: 2c9349cfa14af844687209928a86d97b, type: 3}
   m_PrefabInstance: {fileID: 2670515643470611492}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &801447036
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 801447023}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9d3ab9d84ac4c154a9a673c53a453478, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::HazmatMask
+  maskId: 2
 --- !u!1001 &1299429028
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -931,7 +944,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 3801854771590989409, guid: 2c9349cfa14af844687209928a86d97b, type: 3}
+      insertIndex: 10
+      addedObject: {fileID: 801447036}
   m_SourcePrefab: {fileID: 100100000, guid: 2c9349cfa14af844687209928a86d97b, type: 3}
 --- !u!1001 &3066422369667104015
 PrefabInstance:

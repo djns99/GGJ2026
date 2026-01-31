@@ -7,6 +7,7 @@ TagManager:
   - wide
   - Hazard
   - Gas
+  - Chaser
   layers:
   - Default
   - TransparentFX

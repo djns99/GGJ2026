@@ -59,20 +59,25 @@ public class PlayerController : MonoBehaviour
     private Animator anim;
     private SpriteRenderer spriteRenderer;
 
+    [Header("Hazmat")]
+    public bool hazmat = false;
+
     private Rigidbody2D rb;
     private Camera mainCamera;
     private float moveInput;
+    private float coyoteCounter;
     [DoNotSerialize]
     public int jumpsRemaining;
-    private float coyoteCounter;
     private float jumpBufferCounter;
     private bool isGrounded;
     private bool wasGrounded;
 
+
+
     enum SlowState { SLOWING = 0, SLOW = 1, RECOVERING = 2, HEALTHY = 3 };
     public float[] slowStateTimeSpans = { 0.5f, 2.0f, 0.5f, 0.0f };
     public float slowedMaxSpeed = 6f;
-    private SlowState slowState;
+    private SlowState slowState = SlowState.RECOVERING;
     private float slowStateTimeRemaining = 0f;
 
 
@@ -372,13 +377,18 @@ public class PlayerController : MonoBehaviour
         if (collision == null)
             return;
 
-        if(collision.CompareTag("Gas") && slowState == SlowState.HEALTHY)
+        if(collision.CompareTag("Gas") && slowState == SlowState.HEALTHY && hazmat)
         {
             slowState = SlowState.SLOWING;
             slowStateTimeRemaining = slowStateTimeSpans[0];
         }
 
-        if (collision.CompareTag("Hazard"))
+        if (collision.CompareTag("Hazard") && !hazmat)
+        {
+            ReloadGame();
+        }
+
+        if(collision.CompareTag("Chaser"))
         {
             ReloadGame();
         }
