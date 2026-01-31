@@ -24,12 +24,17 @@ public class PlayerController : MonoBehaviour
     public bool canTeleport = false;
     public float maxTeleportDistance = 5f;
     public LayerMask obstacleLayer;
+    public float teleportCooldown = 3f;
+    public float teleportTimer = 0f;
     // Useful if you want teleport to ignore certain layers (like triggers)
 
     [Header("Teleport Visuals")]
     public LineRenderer rangeRenderer; // Drag your LineRenderer here
     public int segments = 50;
     public GameObject teleportEffectPrefab; // Drag your prefab here
+
+    private Animator anim;
+    private SpriteRenderer spriteRenderer;
 
     private Rigidbody2D rb;
     private Camera mainCamera;
@@ -45,6 +50,8 @@ public class PlayerController : MonoBehaviour
     {
         rb = GetComponent<Rigidbody2D>();
         mainCamera = Camera.main;
+        anim = GetComponent<Animator>(); // Get the Animator
+        spriteRenderer = GetComponent<SpriteRenderer>(); // Get the SpriteRenderer
     }
     void Start()
     {
@@ -89,9 +96,36 @@ public class PlayerController : MonoBehaviour
         }
 
         // 3. Update Teleport Range Visual
+        // Cooldown Timer Logic
+        if (teleportTimer > 0)
+        {
+            teleportTimer -= Time.deltaTime;
+        }
         UpdateRangeVisual();
+
+        // 4. Animation and Sprite Flipping
+        // We use Mathf.Abs so that moving left (-1) still counts as "Speed 1"
+        anim.SetFloat("Speed", Mathf.Abs(moveInput));
+
+        // Check if we need to flip the character
+        if (moveInput > 0 && transform.localScale.x < 0)
+        {
+            Flip();
+        }
+        else if (moveInput < 0 && transform.localScale.x > 0)
+        {
+            Flip();
+        }
     }
     // Update the LineRenderer to show teleport range
+
+    private void Flip()
+    {
+        // Multiply the player's x local scale by -1.
+        Vector3 localScale = transform.localScale;
+        localScale.x *= -1;
+        transform.localScale = localScale;
+    }
     private void UpdateRangeVisual()
     {
         if (rangeRenderer == null) return;
@@ -101,6 +135,13 @@ public class PlayerController : MonoBehaviour
 
         if (canTeleport)
         {
+            // 1. Determine the color based on the cooldown timer
+            // We use a custom orange or Unity's built-in Color.orange
+            Color currentStateColor = (teleportTimer > 0) ? new Color(1f, 0.5f, 0f) : Color.cyan;
+
+            // 2. Apply the color to the LineRenderer
+            rangeRenderer.startColor = currentStateColor;
+            rangeRenderer.endColor = currentStateColor;
             float angle = 0f;
             for (int i = 0; i < segments; i++)
             {
@@ -120,7 +161,7 @@ public class PlayerController : MonoBehaviour
     public void OnTeleport(InputValue value)
     {
         // Only trigger if the bool is on and the button was just pressed
-        if (!canTeleport || !value.isPressed) return;
+        if (!canTeleport || !value.isPressed || teleportTimer > 0) return;
         Vector2 mousePos = Mouse.current.position.ReadValue();
         Debug.Log($"<color=cyan>Teleporting!</color> Mouse Screen Pos: {mousePos}");
         ExecuteTeleport();
@@ -162,6 +203,10 @@ public class PlayerController : MonoBehaviour
         Debug.Log($"<color=cyan>Teleported.</color> Distance adjusted by {safetyBreak * 0.1f} units to avoid collision.");
         // 5. Spawn effect at the END position
         SpawnTeleportEffect(finalTarget);
+
+        teleportTimer = teleportCooldown;
+        Debug.Log($"Teleported. Cooldown started: {teleportCooldown}s");
+
     }
 
     private void SpawnTeleportEffect(Vector2 position)
@@ -219,5 +264,15 @@ public class PlayerController : MonoBehaviour
         // Visualizing the teleport range in the editor
         Gizmos.color = Color.cyan;
         Gizmos.DrawWireSphere(transform.position, maxTeleportDistance);
+
+        // 2. Visualize the actual Player Collider (The "Physical" body)
+        BoxCollider2D collider = GetComponent<BoxCollider2D>();
+        if (collider != null)
+        {
+            Gizmos.color = Color.yellow;
+            // This draws a box exactly where the physics engine thinks your body is
+            Vector3 colliderPos = transform.TransformPoint(collider.offset);
+            Gizmos.DrawWireCube(colliderPos, collider.size);
+        }
     }
 }

@@ -1,6 +1,8 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
 using UnityEngine.UIElements;
@@ -12,6 +14,8 @@ public class MaskSwapper : MonoBehaviour
     public GameObject player;
 
     public Canvas canvas;
+
+    public SpriteRenderer playerMaskVisual;
 
     private Mask currentMask = null;
     private List<Mask> imasks = new List<Mask>();
@@ -59,6 +63,13 @@ public class MaskSwapper : MonoBehaviour
             currentMask.RemoveAbilities(player);
         if (maskId != -1)
             selectedImages[maskId].enabled = false;
+
+        if (playerMaskVisual != null)
+        {
+            playerMaskVisual.sprite = null;
+            playerMaskVisual.enabled = false;
+        }
+
         maskId = -1;
         currentMask = null;
     }
@@ -80,9 +91,15 @@ public class MaskSwapper : MonoBehaviour
         }
     }
 
-    public void ProcessMaskRequest(int i, InputValue v)
+    public void OnUIMaskElementClicked(GameObject maskClicked)
     {
-        if (v.isPressed && maskId != i && i < imasks.Count && imasks[i].CanApply(player))
+        Debug.Log("Clicked");
+        GetComponent<MaskSwapper>().ProcessMaskRequest(Int32.Parse(maskClicked.name.Last().ToString()) - 1, false);
+    }
+
+    public void ProcessMaskRequest(int i, bool enabled)
+    {
+        if (enabled && maskId != i && i < imasks.Count && imasks[i].CanApply(player))
         {
             removeCurrentMask();
             imasks[i].ApplyAbilities(player);
@@ -90,25 +107,31 @@ public class MaskSwapper : MonoBehaviour
             currentMask = imasks[i];
             selectedImages[maskId].enabled = true;
         }
+
+        if (playerMaskVisual != null)
+        {
+            playerMaskVisual.sprite = currentMask.GetSprite();
+            playerMaskVisual.enabled = true;
+        }
     }
 
     public void OnMask1(InputValue context)
     {
-        ProcessMaskRequest(0, context);
+        ProcessMaskRequest(0, context.isPressed);
     }
 
     public void OnMask2(InputValue context)
     {
-        ProcessMaskRequest(1, context);
+        ProcessMaskRequest(1, context.isPressed);
     }
 
     public void OnMask3(InputValue context)
     {
-        ProcessMaskRequest(2, context);
+        ProcessMaskRequest(2, context.isPressed);
     }
     public void OnMask4(InputValue context)
     {
-        ProcessMaskRequest(3, context);
+        ProcessMaskRequest(3, context.isPressed);
     }
 }
 
