@@ -28,13 +28,9 @@ public class ChaserBehaviour : MonoBehaviour
         if (collision.gameObject.CompareTag("Player"))
         {
             isColliding = true;
-            Camera.main.GetComponent<ChaserBehaviour>().enabled = false;
+            //Camera.main.GetComponent<ChaserBehaviour>().enabled = false;
             ReloadGame();
         }
-        //if (collision.CompareTag("Player"))
-        //{
-        //    isColliding = true;
-        //}
     }
 
     private void ReloadGame() {
