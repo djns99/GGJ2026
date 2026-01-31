@@ -239,7 +239,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PlayerController
   playerAudioSource: {fileID: 3434916804893984934}
   jumpSound: {fileID: 8300000, guid: 4c11fe0b03c340d4099c861d97ad213a, type: 3}
-  teleportSound: {fileID: 0}
+  teleportSound: {fileID: 8300000, guid: bb9fd915b5738fc44a107e5155c46273, type: 3}
   initialMoveSpeed: 15
   acceleration: 50
   jumpForce: 24

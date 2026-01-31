@@ -822,6 +822,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 6247063370687901566, guid: f28183ca24ad529478a0242e4913fff8, type: 3}
+      propertyPath: cam
+      value: 
+      objectReference: {fileID: 1478127767}
     - target: {fileID: 6288263066178769264, guid: f28183ca24ad529478a0242e4913fff8, type: 3}
       propertyPath: m_LocalPosition.x
       value: 2.33477
@@ -879,6 +883,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2053511583143181974, guid: 2c9349cfa14af844687209928a86d97b, type: 3}
+      propertyPath: teleportSound
+      value: 
+      objectReference: {fileID: 8300000, guid: bb9fd915b5738fc44a107e5155c46273, type: 3}
     - target: {fileID: 4443070262712555240, guid: 2c9349cfa14af844687209928a86d97b, type: 3}
       propertyPath: m_LocalPosition.x
       value: 1.052
