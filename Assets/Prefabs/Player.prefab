@@ -45,6 +45,7 @@ GameObject:
   - component: {fileID: 7330170256330553469}
   - component: {fileID: 4568869788648208681}
   - component: {fileID: 254526944884336244}
+  - component: {fileID: 4359517332741689485}
   - component: {fileID: 6328950347216396001}
   - component: {fileID: 7257763414560396336}
   m_Layer: 0
@@ -152,6 +153,12 @@ MonoBehaviour:
   groundLayer:
     serializedVersion: 2
     m_Bits: 8
+  canTeleport: 1
+  maxTeleportDistance: 5
+  obstacleLayer:
+    serializedVersion: 2
+    m_Bits: 0
+  jumpsRemaining: 0
 --- !u!50 &7330170256330553469
 Rigidbody2D:
   serializedVersion: 5
@@ -255,6 +262,24 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 0.18, y: 0.19}
   m_EdgeRadius: 0
+--- !u!114 &4359517332741689485
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9069563807208065718}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3dc2ab71b53903b468ed1b27bbb4776d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::TeleportMask
+  maskId: 1
+  maskLevel: 1
+  cooldownLengths:
+  - 10
+  - 5
+  - 3
 --- !u!114 &6328950347216396001
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -267,6 +292,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: deb3ea6457875894ebfd1240f6887f9c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DoubleJumpMask
+  maskId: 0
   maskLevel: 12
 --- !u!114 &7257763414560396336
 MonoBehaviour:

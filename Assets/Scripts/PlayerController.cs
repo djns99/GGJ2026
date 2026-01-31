@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -20,7 +21,7 @@ public class PlayerController : MonoBehaviour
     public LayerMask groundLayer;
 
     [Header("Teleportation")]
-    public bool canTeleport = true;
+    public bool canTeleport = false;
     public float maxTeleportDistance = 5f;
     // Useful if you want teleport to ignore certain layers (like triggers)
     public LayerMask obstacleLayer;
@@ -28,7 +29,8 @@ public class PlayerController : MonoBehaviour
     private Rigidbody2D rb;
     private Camera mainCamera;
     private float moveInput;
-    private int jumpsRemaining;
+    [DoNotSerialize]
+    public int jumpsRemaining;
     private float coyoteCounter;
     private float jumpBufferCounter;
     private bool isGrounded;

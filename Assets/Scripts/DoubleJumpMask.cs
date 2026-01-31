@@ -17,12 +17,14 @@ public class DoubleJumpMask : MonoBehaviour, Mask
 
     public Sprite GetSprite()
     {
-        return null;
+        return Resources.Load<Sprite>("DoubleJumpMaskSprite");
     }
 
     public void RemoveAbilities(GameObject player)
     {
-        player.GetComponent<PlayerController>().maxJumps = 1;
+        var controller = player.GetComponent<PlayerController>();
+        controller.maxJumps = 1;
+        controller.jumpsRemaining = 0;
     }
 
     public bool ShouldRemove(GameObject player)

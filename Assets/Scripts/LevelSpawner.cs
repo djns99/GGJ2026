@@ -82,12 +82,7 @@ public class LevelSpawner : MonoBehaviour
         floor.transform.localPosition = Vector3.zero;
         var floorBounds = getAllBounds(floor);
         floor.transform.localPosition = new Vector3(floorBounds.extents.x, -floorBounds.extents.y, 0);
-        Debug.Log("Parent position " + parent.transform.localPosition);
-        Debug.Log("Floor local position" + floor.transform.localPosition);
-        Debug.Log("Floor global position" + floor.transform.position);
         var newFloorBounds = getAllBounds(floor);
-        Debug.Log("Collider bounds max " + newFloorBounds.max);
-        Debug.Log("Collider bounds extents " + newFloorBounds.extents);
         return floor;
     }
 
@@ -123,11 +118,9 @@ public class LevelSpawner : MonoBehaviour
             if (last != null) {
                 var lastFloorBounds = getAllBounds(last.Item2);
                 position.x = last.Item1.transform.position.x + lastFloorBounds.extents.x * 2;
-                Debug.Log("Last end position " + lastFloorBounds);
             }
             
             parent.transform.position = position;
-            Debug.Log("Next position " + position);
 
             var floor = attachFloor(parent, last);
             var obstacle = attachObstacle(parent, floor, last);

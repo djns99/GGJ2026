@@ -2,6 +2,8 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.UI;
+using UnityEngine.UIElements;
 
 public class MaskSwapper : MonoBehaviour
 {
@@ -9,8 +11,11 @@ public class MaskSwapper : MonoBehaviour
     public int maskId = -1;
     public GameObject player;
 
+    public Canvas canvas;
+
     private Mask currentMask = null;
     private List<Mask> imasks = new List<Mask>();
+    private List<UnityEngine.UI.Image> selectedImages;
 
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -24,16 +29,36 @@ public class MaskSwapper : MonoBehaviour
         imasks = player.GetComponents<Mask>().ToList();
         imasks.Sort((a, b) => a.GetMaskId().CompareTo(b.GetMaskId()));
         Debug.LogWarning("Found masks " + imasks.Count);
-        //foreach (var mask in masks)
-        //{
-        //    imasks.Add(mask.Cas);
-        //}
+        var maskUiItems = canvas.GetComponentsInChildren<UnityEngine.UI.Image>();
+        for (int i = 0; i < imasks.Count; i++ )
+        {
+            foreach(var item in maskUiItems)
+            {
+                Debug.Log(item);
+                Debug.Log(item.gameObject.name);
+                if (item.gameObject.name == "Mask" + (i + 1))
+                {
+                    var maskSprite = imasks[i].GetSprite();
+                    Debug.Log("Set mask " + item.gameObject.name + " mask " + imasks[i].GetSprite());
+                    item.sprite = maskSprite;
+                    item.color = Color.white;
+                    break;
+                }
+            }
+        }
+
+        selectedImages = maskUiItems.ToList().FindAll(x => x.name.Contains("MaskSelected"));
+        selectedImages.Sort((a, b) => a.name.CompareTo(b.name));
+        selectedImages.ForEach(x => x.enabled = false);
+        Debug.Log("Found " + selectedImages.Count + " selected element UI items");
     }
 
     void removeCurrentMask()
     {
         if (currentMask != null)
             currentMask.RemoveAbilities(player);
+        if (maskId != -1)
+            selectedImages[maskId].enabled = false;
         maskId = -1;
         currentMask = null;
     }
@@ -63,6 +88,7 @@ public class MaskSwapper : MonoBehaviour
             imasks[i].ApplyAbilities(player);
             maskId = i;
             currentMask = imasks[i];
+            selectedImages[maskId].enabled = true;
         }
     }
 
