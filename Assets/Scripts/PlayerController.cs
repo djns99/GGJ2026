@@ -1,6 +1,7 @@
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 
 [RequireComponent(typeof(Rigidbody2D))]
 public class PlayerController : MonoBehaviour
@@ -11,8 +12,26 @@ public class PlayerController : MonoBehaviour
     public AudioClip teleportSound;
 
     [Header("Movement")]
-    public float moveSpeed = 15f;
+    public float initialMoveSpeed = 15f;
     public float acceleration = 50f;
+
+
+    private float actualMoveSpeed = 15f;
+
+
+    private float currentMaxMoveSpeed;
+    public float CurrentMaxMoveSpeed
+    {
+        get { return currentMaxMoveSpeed;  }
+        set
+        {
+            if(currentMaxMoveSpeed == actualMoveSpeed)
+            {
+                actualMoveSpeed = value;
+            }
+            currentMaxMoveSpeed = value;
+        }
+    }
 
     [Header("Jumping")]
     public float jumpForce = 24f;
@@ -55,7 +74,6 @@ public class PlayerController : MonoBehaviour
     public float[] slowStateTimeSpans = { 0.5f, 2.0f, 0.5f, 0.0f };
     public float slowedMaxSpeed = 6f;
     private SlowState slowState;
-    private float unslowedMaxSpeed = 15f;
     private float slowStateTimeRemaining = 0f;
 
 
@@ -74,6 +92,9 @@ public class PlayerController : MonoBehaviour
             rangeRenderer.positionCount = segments;
             rangeRenderer.useWorldSpace = true;
         }
+
+        currentMaxMoveSpeed = initialMoveSpeed;
+        actualMoveSpeed = currentMaxMoveSpeed;
     }
 
     void Update()
@@ -137,7 +158,7 @@ public class PlayerController : MonoBehaviour
             case SlowState.SLOWING:
             {
                     var time = slowStateTimeRemaining / slowStateTimeSpans[0];
-                    moveSpeed = Mathf.Lerp(slowedMaxSpeed, unslowedMaxSpeed, time);
+                    actualMoveSpeed = Mathf.Lerp(slowedMaxSpeed, currentMaxMoveSpeed, time);
                     if(time == 0)
                     {
                         slowState = SlowState.SLOW;
@@ -157,11 +178,11 @@ public class PlayerController : MonoBehaviour
             case SlowState.RECOVERING:
                 {
                     var time = slowStateTimeRemaining / slowStateTimeSpans[0];
-                    moveSpeed = Mathf.Lerp(unslowedMaxSpeed, slowedMaxSpeed, time);
+                    actualMoveSpeed = Mathf.Lerp(currentMaxMoveSpeed, slowedMaxSpeed, time);
                     if (time == 0)
                     {
                         slowState = SlowState.HEALTHY;
-                        moveSpeed = unslowedMaxSpeed;
+                        actualMoveSpeed = currentMaxMoveSpeed;
                     }
                     break;
                 }
@@ -280,7 +301,7 @@ public class PlayerController : MonoBehaviour
 
     void FixedUpdate()
     {
-        float targetSpeed = moveInput * moveSpeed;
+        float targetSpeed = moveInput * actualMoveSpeed;
         float speedDif = targetSpeed - rb.linearVelocity.x;
         float movement = speedDif * acceleration;
         rb.AddForce(movement * Vector2.right, ForceMode2D.Force);
@@ -347,13 +368,16 @@ public class PlayerController : MonoBehaviour
         {
             slowState = SlowState.SLOWING;
             slowStateTimeRemaining = slowStateTimeSpans[0];
-            unslowedMaxSpeed = moveSpeed;
         }
 
         if (collision.CompareTag("Hazard"))
         {
-            // TODO Die
-            Debug.LogAssertion("Player died to a hazard");
+            ReloadGame();
         }
+    }
+
+    private void ReloadGame()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 }
