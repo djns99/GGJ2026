@@ -6,11 +6,11 @@ using UnityEngine.InputSystem;
 public class PlayerController : MonoBehaviour
 {
     [Header("Movement")]
-    public float moveSpeed = 8f;
+    public float moveSpeed = 15f;
     public float acceleration = 50f;
 
     [Header("Jumping")]
-    public float jumpForce = 12f;
+    public float jumpForce = 24f;
     public int maxJumps = 2;
     public float coyoteTime = 0.15f;
     public float jumpBufferTime = 0.15f;
@@ -45,6 +45,14 @@ public class PlayerController : MonoBehaviour
     private float jumpBufferCounter;
     private bool isGrounded;
     private bool wasGrounded;
+
+    enum SlowState { SLOWING = 0, SLOW = 1, RECOVERING = 2, HEALTHY = 3 };
+    public float[] slowStateTimeSpans = { 0.5f, 2.0f, 0.5f, 0.0f };
+    public float slowedMaxSpeed = 6f;
+    private SlowState slowState;
+    private float unslowedMaxSpeed = 15f;
+    private float slowStateTimeRemaining = 0f;
+
 
     void Awake()
     {
@@ -116,6 +124,45 @@ public class PlayerController : MonoBehaviour
         {
             Flip();
         }
+
+        slowStateTimeRemaining -= Time.deltaTime;
+        slowStateTimeRemaining = Mathf.Max(slowStateTimeRemaining, 0f);
+        switch (slowState)
+        {
+            case SlowState.SLOWING:
+            {
+                    var time = slowStateTimeRemaining / slowStateTimeSpans[0];
+                    moveSpeed = Mathf.Lerp(slowedMaxSpeed, unslowedMaxSpeed, time);
+                    if(time == 0)
+                    {
+                        slowState = SlowState.SLOW;
+                        slowStateTimeRemaining = slowStateTimeSpans[1];
+                    }
+                    break;
+            }
+            case SlowState.SLOW:
+                {
+                    if (slowStateTimeRemaining == 0)
+                    {
+                        slowState = SlowState.RECOVERING;
+                        slowStateTimeRemaining = slowStateTimeSpans[2];
+                    }
+                    break;
+                }
+            case SlowState.RECOVERING:
+                {
+                    var time = slowStateTimeRemaining / slowStateTimeSpans[0];
+                    moveSpeed = Mathf.Lerp(unslowedMaxSpeed, slowedMaxSpeed, time);
+                    if (time == 0)
+                    {
+                        slowState = SlowState.HEALTHY;
+                        moveSpeed = unslowedMaxSpeed;
+                    }
+                    break;
+                }
+            default: break;
+        }
+
     }
     // Update the LineRenderer to show teleport range
 
@@ -273,6 +320,19 @@ public class PlayerController : MonoBehaviour
             // This draws a box exactly where the physics engine thinks your body is
             Vector3 colliderPos = transform.TransformPoint(collider.offset);
             Gizmos.DrawWireCube(colliderPos, collider.size);
+        }
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision == null)
+            return;
+
+        if(collision.CompareTag("Gas") && slowState == SlowState.HEALTHY)
+        {
+            slowState = SlowState.SLOWING;
+            slowStateTimeRemaining = slowStateTimeSpans[0];
+            unslowedMaxSpeed = moveSpeed;
         }
     }
 }
