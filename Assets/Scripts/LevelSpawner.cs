@@ -22,7 +22,8 @@ public class LevelSpawner : MonoBehaviour
     
     private LinkedList<SectionTuple> spawnedObjects = new LinkedList<SectionTuple>();
 
-    
+    public int numEmptyZones = 2;
+    private int lifetimeSpawns = 0;
 
     
     
@@ -59,7 +60,7 @@ public class LevelSpawner : MonoBehaviour
     GameObject attachObstacle(GameObject parent, GameObject currentFloor, SectionTuple lastSection)
     {
         // Skip obstacle on the first item, or if the previous obstacle was wide
-        if(lastSection == null || (lastSection.Item3 != null && lastSection.Item3.tag == "wide"))
+        if(lastSection == null || lifetimeSpawns < numEmptyZones || (lastSection.Item3 != null && lastSection.Item3.tag == "wide"))
         {
             return null; // Previous obstacle is extra wide
         }
@@ -110,7 +111,7 @@ public class LevelSpawner : MonoBehaviour
 
         // Spawn only one object per frame
         if (spawnedObjects.Count == 0 || spawnedObjects.Last.Value.Item1.GetComponent<Transform>().position.x < spawnThreshold)
-        { 
+        {
             var last = spawnedObjects.Count > 0 ? spawnedObjects.Last.Value : null;
             var parent = Instantiate(parentType);
  
@@ -126,6 +127,7 @@ public class LevelSpawner : MonoBehaviour
             var obstacle = attachObstacle(parent, floor, last);
 
             spawnedObjects.AddLast(new SectionTuple(parent, floor, obstacle));
+            lifetimeSpawns++;
         }
     }
 }
