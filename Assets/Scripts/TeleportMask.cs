@@ -7,6 +7,8 @@ public class TeleportMask : MonoBehaviour, Mask
     public int maskLevel = 1;
     public List<float> cooldownLengths = new List<float>{ 10f, 5f, 3f };
 
+    public AudioClip maskMusic;
+    public AudioClip GetMaskMusic() => maskMusic;
     public void ApplyAbilities(GameObject player)
     {
         var controller = player.GetComponent<PlayerController>();
