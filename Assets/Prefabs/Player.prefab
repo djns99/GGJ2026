@@ -47,6 +47,7 @@ GameObject:
   - component: {fileID: 254526944884336244}
   - component: {fileID: 7257763414560396336}
   - component: {fileID: 6099423000409525949}
+  - component: {fileID: 947478758693110454}
   - component: {fileID: 7330981621129028735}
   m_Layer: 0
   m_Name: Player
@@ -153,7 +154,7 @@ MonoBehaviour:
   groundLayer:
     serializedVersion: 2
     m_Bits: 8
-  canTeleport: 1
+  canTeleport: 0
   maxTeleportDistance: 5
   obstacleLayer:
     serializedVersion: 2
@@ -161,6 +162,7 @@ MonoBehaviour:
   rangeRenderer: {fileID: 6099423000409525949}
   segments: 50
   teleportEffectPrefab: {fileID: 3331822424110829512, guid: 9703da99d75d1ac4bac6f62fa38836da, type: 3}
+  jumpsRemaining: 0
 --- !u!50 &7330170256330553469
 Rigidbody2D:
   serializedVersion: 5
@@ -278,6 +280,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::MaskSwapper
   maskId: -1
   player: {fileID: 9069563807208065718}
+  canvas: {fileID: 0}
 --- !u!120 &6099423000409525949
 LineRenderer:
   serializedVersion: 3
@@ -388,6 +391,24 @@ LineRenderer:
   m_UseWorldSpace: 1
   m_Loop: 1
   m_ApplyActiveColorSpace: 1
+--- !u!114 &947478758693110454
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9069563807208065718}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3dc2ab71b53903b468ed1b27bbb4776d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::TeleportMask
+  maskId: 1
+  maskLevel: 1
+  cooldownLengths:
+  - 10
+  - 5
+  - 3
 --- !u!114 &7330981621129028735
 MonoBehaviour:
   m_ObjectHideFlags: 0
