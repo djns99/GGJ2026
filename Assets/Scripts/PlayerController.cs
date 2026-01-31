@@ -5,6 +5,11 @@ using UnityEngine.InputSystem;
 [RequireComponent(typeof(Rigidbody2D))]
 public class PlayerController : MonoBehaviour
 {
+    [Header("Audio")]
+    public AudioSource playerAudioSource; // Drag your Player's AudioSource here
+    public AudioClip jumpSound;
+    public AudioClip teleportSound;
+
     [Header("Movement")]
     public float moveSpeed = 15f;
     public float acceleration = 50f;
@@ -223,6 +228,11 @@ public class PlayerController : MonoBehaviour
 
     private void ExecuteTeleport(Vector2 inputScreenPos)
     {
+        if (playerAudioSource != null && teleportSound != null)
+        {
+            playerAudioSource.PlayOneShot(teleportSound);
+        }
+
         // Convert the screen tap/click to a world position
         Vector3 worldPoint = mainCamera.ScreenToWorldPoint(new Vector3(
             inputScreenPos.x,
@@ -283,13 +293,17 @@ public class PlayerController : MonoBehaviour
         if (value.isPressed)
         {
             jumpBufferCounter = jumpBufferTime;
-            Debug.Log($"Jump Pressed. Buffer started. Jumps remaining: {jumpsRemaining}");
         }
     }
 
     private void ExecuteJump()
     {
-        Debug.Log($"<color=cyan>Executing Jump.</color> Jumps before: {jumpsRemaining}");
+
+        if (playerAudioSource != null && jumpSound != null)
+        {
+            // PlayOneShot allows sounds to overlap (important for double jumping!)
+            playerAudioSource.PlayOneShot(jumpSound);
+        }
 
         // Reset Y velocity for consistent height (essential for double jumps)
         rb.linearVelocity = new Vector2(rb.linearVelocity.x, 0);
@@ -298,6 +312,7 @@ public class PlayerController : MonoBehaviour
         jumpsRemaining--;
         jumpBufferCounter = 0;
         coyoteCounter = 0;
+        Debug.Log($"<color=cyan>Executing Jump.</color> Jumps after: {jumpsRemaining}");
     }
 
     private void OnDrawGizmos()
