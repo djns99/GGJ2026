@@ -300,8 +300,8 @@ MonoBehaviour:
   chaserTransform: {fileID: 732463999}
   cameraObject: {fileID: 1478127767}
   spawnBuffer: 10
-  despawnBuffer: 30
-  defaultSpawnPoint: {x: -10, y: 2, z: 0}
+  despawnBuffer: 60
+  defaultSpawnPoint: {x: -20, y: 2, z: 0}
 --- !u!4 &710483436
 Transform:
   m_ObjectHideFlags: 0
