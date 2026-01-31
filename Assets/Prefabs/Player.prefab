@@ -45,12 +45,9 @@ GameObject:
   - component: {fileID: 7330170256330553469}
   - component: {fileID: 4568869788648208681}
   - component: {fileID: 254526944884336244}
-<<<<<<< Updated upstream
-  - component: {fileID: 6328950347216396001}
   - component: {fileID: 7257763414560396336}
-=======
   - component: {fileID: 6099423000409525949}
->>>>>>> Stashed changes
+  - component: {fileID: 7330981621129028735}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -267,26 +264,6 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 0.18, y: 0.19}
   m_EdgeRadius: 0
-<<<<<<< Updated upstream
---- !u!114 &6328950347216396001
-MonoBehaviour:
-=======
---- !u!120 &6099423000409525949
-LineRenderer:
-  serializedVersion: 3
->>>>>>> Stashed changes
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9069563807208065718}
-  m_Enabled: 1
-<<<<<<< Updated upstream
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: deb3ea6457875894ebfd1240f6887f9c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::DoubleJumpMask
-  maskLevel: 12
 --- !u!114 &7257763414560396336
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -301,7 +278,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::MaskSwapper
   maskId: -1
   player: {fileID: 9069563807208065718}
-=======
+--- !u!120 &6099423000409525949
+LineRenderer:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9069563807208065718}
+  m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -318,8 +303,7 @@ MonoBehaviour:
   m_MeshLodSelectionBias: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
-  m_Materials:
-  - {fileID: 0}
+  m_Materials: []
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -365,7 +349,7 @@ MonoBehaviour:
       m_RotationOrder: 4
     colorGradient:
       serializedVersion: 2
-      key0: {r: 1, g: 1, b: 1, a: 1}
+      key0: {r: 0.40792987, g: 0.84698075, b: 0.9716981, a: 1}
       key1: {r: 1, g: 1, b: 1, a: 1}
       key2: {r: 0, g: 0, b: 0, a: 0}
       key3: {r: 0, g: 0, b: 0, a: 0}
@@ -390,7 +374,7 @@ MonoBehaviour:
       atime6: 0
       atime7: 0
       m_Mode: 0
-      m_ColorSpace: -1
+      m_ColorSpace: 0
       m_NumColorKeys: 2
       m_NumAlphaKeys: 2
     numCornerVertices: 0
@@ -403,4 +387,17 @@ MonoBehaviour:
   m_UseWorldSpace: 1
   m_Loop: 1
   m_ApplyActiveColorSpace: 1
->>>>>>> Stashed changes
+--- !u!114 &7330981621129028735
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9069563807208065718}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: deb3ea6457875894ebfd1240f6887f9c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DoubleJumpMask
+  maskId: 0
+  maskLevel: 1
