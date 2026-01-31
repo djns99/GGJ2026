@@ -916,6 +916,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6112112345276358463, guid: 2c9349cfa14af844687209928a86d97b, type: 3}
+      propertyPath: canvas
+      value: 
+      objectReference: {fileID: 1421008531}
+    - target: {fileID: 6112112345276358463, guid: 2c9349cfa14af844687209928a86d97b, type: 3}
+      propertyPath: musicManager
+      value: 
+      objectReference: {fileID: 768574939}
     - target: {fileID: 7257763414560396336, guid: 2c9349cfa14af844687209928a86d97b, type: 3}
       propertyPath: canvas
       value: 
