@@ -19,7 +19,14 @@ public class PlayerController : MonoBehaviour
     public Vector2 boxSize = new Vector2(0.5f, 0.1f);
     public LayerMask groundLayer;
 
+    [Header("Teleportation")]
+    public bool canTeleport = true;
+    public float maxTeleportDistance = 5f;
+    // Useful if you want teleport to ignore certain layers (like triggers)
+    public LayerMask obstacleLayer;
+
     private Rigidbody2D rb;
+    private Camera mainCamera;
     private float moveInput;
     private int jumpsRemaining;
     private float coyoteCounter;
@@ -27,7 +34,11 @@ public class PlayerController : MonoBehaviour
     private bool isGrounded;
     private bool wasGrounded;
 
-    void Awake() => rb = GetComponent<Rigidbody2D>();
+    void Awake()
+    {
+        rb = GetComponent<Rigidbody2D>();
+        mainCamera = Camera.main;
+    }
 
     void Update()
     {
@@ -35,7 +46,6 @@ public class PlayerController : MonoBehaviour
         wasGrounded = isGrounded;
         isGrounded = Physics2D.OverlapBox(groundCheck.position, boxSize, 0, groundLayer);
 
-        // 2. State Change Logs & Jump Reset
         if (isGrounded)
         {
             if (!wasGrounded)
@@ -47,11 +57,10 @@ public class PlayerController : MonoBehaviour
         }
         else
         {
-            if (wasGrounded) Debug.Log("<color=yellow>Left Ground.</color>");
             coyoteCounter -= Time.deltaTime;
         }
 
-        // 3. Jump Buffer Handling
+        // 2. Jump Buffer Handling
         if (jumpBufferCounter > 0)
         {
             jumpBufferCounter -= Time.deltaTime;
@@ -62,6 +71,49 @@ public class PlayerController : MonoBehaviour
                 ExecuteJump();
             }
         }
+    }
+    // This method is called by the Player Input component
+    public void OnTeleport(InputValue value)
+    {
+        // Only trigger if the bool is on and the button was just pressed
+        if (!canTeleport || !value.isPressed) return;
+        Vector2 mousePos = Mouse.current.position.ReadValue();
+        Debug.Log($"<color=cyan>Teleporting!</color> Mouse Screen Pos: {mousePos}");
+        ExecuteTeleport();
+    }
+
+    private void ExecuteTeleport()
+    {
+        // 1. Get Mouse position accurately
+        Vector2 mouseScreenPos = Mouse.current.position.ReadValue();
+        Vector3 worldPoint = mainCamera.ScreenToWorldPoint(new Vector3(mouseScreenPos.x, mouseScreenPos.y, Mathf.Abs(mainCamera.transform.position.z)));
+        Vector2 targetPos = (Vector2)worldPoint;
+
+        // 2. Calculate direction and clamp to max distance
+        Vector2 startPos = rb.position;
+        Vector2 direction = targetPos - startPos;
+        float distance = Mathf.Min(direction.magnitude, maxTeleportDistance);
+        direction.Normalize();
+        Debug.DrawLine(startPos, rb.position, Color.magenta, 2f);
+        // 3. Raycast to find obstacles (The "Trace Back")
+        // We use a small radius (CircleCast) instead of a thin line (Raycast) 
+        // to ensure the player's whole body fits in the destination.
+        float playerSize = 0.4f; // Adjust based on your character's width
+        RaycastHit2D hit = Physics2D.CircleCast(startPos, playerSize, direction, distance, obstacleLayer);
+
+        if (hit.collider != null)
+        {
+            // If we hit a wall, stop just before the hit point
+            rb.position = startPos + (direction * (hit.distance - 0.1f));
+        }
+        else
+        {
+            // Clear path, move the full allowed distance
+            rb.position = startPos + (direction * distance);
+        }
+
+        // Kill momentum to prevent clipping through things after arrival
+        rb.linearVelocity = Vector2.zero;
     }
 
     void FixedUpdate()
@@ -93,7 +145,7 @@ public class PlayerController : MonoBehaviour
 
         jumpsRemaining--;
         jumpBufferCounter = 0;
-        coyoteCounter = 0; // Consume coyote time so we don't jump again instantly
+        coyoteCounter = 0;
     }
 
     private void OnDrawGizmos()
@@ -103,5 +155,9 @@ public class PlayerController : MonoBehaviour
             Gizmos.color = isGrounded ? Color.green : Color.red;
             Gizmos.DrawWireCube(groundCheck.position, boxSize);
         }
+
+        // Visualizing the teleport range in the editor
+        Gizmos.color = Color.cyan;
+        Gizmos.DrawWireSphere(transform.position, maxTeleportDistance);
     }
 }
