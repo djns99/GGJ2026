@@ -101,10 +101,12 @@ public class MaskSwapper : MonoBehaviour
         }
     }
 
-    public void OnUIMaskElementClicked(GameObject maskClicked)
+    public void OnUIMaskElementClicked(BaseEventData maskClicked)
     {
-        Debug.Log("Clicked");
-        GetComponent<MaskSwapper>().ProcessMaskRequest(Int32.Parse(maskClicked.name.Last().ToString()) - 1, false);
+        var pointClicked = (PointerEventData)maskClicked;
+        var gameObjectClicked = pointClicked.pointerClick;
+        Debug.Log("Clicked " + gameObjectClicked.name);
+        GetComponent<MaskSwapper>().ProcessMaskRequest(Int32.Parse(gameObjectClicked.name.Last().ToString()) - 1, true);
     }
 
     public void ProcessMaskRequest(int i, bool enabled)
@@ -120,7 +122,7 @@ public class MaskSwapper : MonoBehaviour
             musicManager.SwapMusic(imasks[i].GetMaskMusic());
         }
 
-        if (playerMaskVisual != null)
+        if (playerMaskVisual != null && currentMask != null)
         {
             playerMaskVisual.sprite = currentMask.GetSprite();
             playerMaskVisual.enabled = true;

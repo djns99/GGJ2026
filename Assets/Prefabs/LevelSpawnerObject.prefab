@@ -1,0 +1,61 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &2662744740469450156
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1557097046536918522}
+  - component: {fileID: 2931163402400321769}
+  m_Layer: 0
+  m_Name: LevelSpawnerObject
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1557097046536918522
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2662744740469450156}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: -0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2931163402400321769
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2662744740469450156}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1b0a5bd0d33324040af9b8dc11b0f69e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::LevelSpawner
+  parentType: {fileID: 6969640731369420136, guid: d16e97de4ac82b84798506ee9d065762, type: 3}
+  floorTypes:
+  - {fileID: 6847598174268120330, guid: 5b6823ff01c4b71428d79fb84b88a5d5, type: 3}
+  obstacleTypes:
+  - {fileID: 3614625579709860514, guid: a7eb10fd325060a45b1524fc728041fd, type: 3}
+  - {fileID: 1283877453713036632, guid: c7bd7c93c44ff0d44b71f73ac7b2ab78, type: 3}
+  - {fileID: 5269218162765463622, guid: 86c47ae026aff6e449efc156223f51c6, type: 3}
+  - {fileID: 3614625579709860514, guid: 1acffc9673dacf9418b1c05b2a14b2a3, type: 3}
+  - {fileID: 7767199389709060208, guid: ff053f4928cb23a4d9c17585eaa812d6, type: 3}
+  chaserTransform: {fileID: 0}
+  cameraObject: {fileID: 0}
+  spawnBuffer: 10
+  despawnBuffer: 60
+  defaultSpawnPoint: {x: -20, y: 2, z: 0}
+  numEmptyZones: 2

@@ -239,7 +239,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PlayerController
   playerAudioSource: {fileID: 3434916804893984934}
   jumpSound: {fileID: 8300000, guid: 4c11fe0b03c340d4099c861d97ad213a, type: 3}
-  moveSpeed: 15
+  teleportSound: {fileID: 0}
+  initialMoveSpeed: 15
   acceleration: 50
   jumpForce: 24
   maxJumps: 1
@@ -261,6 +262,12 @@ MonoBehaviour:
   segments: 50
   teleportEffectPrefab: {fileID: 3331822424110829512, guid: 9703da99d75d1ac4bac6f62fa38836da, type: 3}
   jumpsRemaining: 0
+  slowStateTimeSpans:
+  - 0.5
+  - 2
+  - 0.5
+  - 0
+  slowedMaxSpeed: 6
 --- !u!50 &7330170256330553469
 Rigidbody2D:
   serializedVersion: 5
