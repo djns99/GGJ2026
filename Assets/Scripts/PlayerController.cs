@@ -349,5 +349,11 @@ public class PlayerController : MonoBehaviour
             slowStateTimeRemaining = slowStateTimeSpans[0];
             unslowedMaxSpeed = moveSpeed;
         }
+
+        if (collision.CompareTag("Hazard"))
+        {
+            // TODO Die
+            Debug.LogAssertion("Player died to a hazard");
+        }
     }
 }

@@ -297,11 +297,13 @@ MonoBehaviour:
   - {fileID: 1283877453713036632, guid: c7bd7c93c44ff0d44b71f73ac7b2ab78, type: 3}
   - {fileID: 5269218162765463622, guid: 86c47ae026aff6e449efc156223f51c6, type: 3}
   - {fileID: 3614625579709860514, guid: 1acffc9673dacf9418b1c05b2a14b2a3, type: 3}
+  - {fileID: 7767199389709060208, guid: ff053f4928cb23a4d9c17585eaa812d6, type: 3}
   chaserTransform: {fileID: 732463999}
   cameraObject: {fileID: 1478127767}
   spawnBuffer: 10
   despawnBuffer: 60
   defaultSpawnPoint: {x: -20, y: 2, z: 0}
+  numEmptyZones: 2
 --- !u!4 &710483436
 Transform:
   m_ObjectHideFlags: 0

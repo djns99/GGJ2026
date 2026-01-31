@@ -25,12 +25,19 @@ public class LevelSpawner : MonoBehaviour
     public int numEmptyZones = 2;
     private int lifetimeSpawns = 0;
 
-    
-    
+    private float cameraWidth = 0f;
+    private float cameraHeight = 0f;
+    private float cameraBottomPosition = 0f;
+
     void Start()
     {
         Debug.Assert(floorTypes.Count > 0);
         Debug.Assert(obstacleTypes.Count > 0);
+
+        Camera cam = Camera.main;
+        cameraHeight = 2f * cam.orthographicSize;
+        cameraWidth = cameraHeight * cam.aspect;
+        cameraBottomPosition = Camera.main.transform.position.y - cameraHeight / 2;
     }
 
     GameObject pickRandomItem(List<GameObject> items)
@@ -90,10 +97,6 @@ public class LevelSpawner : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Camera cam = Camera.main;
-        float height = 2f * cam.orthographicSize;
-        float width = height * cam.aspect;
-
         // Despawn objects that are consumed
         var despawnThreshold = chaserTransform.position.x - despawnBuffer;
         while (spawnedObjects.Count > 0 && spawnedObjects.First.Value.Item1.GetComponent<Transform>().position.x < despawnThreshold)
@@ -104,9 +107,7 @@ public class LevelSpawner : MonoBehaviour
         }
 
         // Spawn objects if needed
-        var spawnThreshold = Camera.main.transform.position.x + width / 2 + spawnBuffer;
-
-        var bottomPosition = Camera.main.transform.position.y - height / 2;
+        var spawnThreshold = Camera.main.transform.position.x + cameraWidth / 2 + spawnBuffer;
 
 
         // Spawn only one object per frame
@@ -115,7 +116,7 @@ public class LevelSpawner : MonoBehaviour
             var last = spawnedObjects.Count > 0 ? spawnedObjects.Last.Value : null;
             var parent = Instantiate(parentType);
  
-            Vector3 position = new Vector3(defaultSpawnPoint.x, bottomPosition + defaultSpawnPoint.y, defaultSpawnPoint.z);
+            Vector3 position = new Vector3(defaultSpawnPoint.x, cameraBottomPosition + defaultSpawnPoint.y, defaultSpawnPoint.z);
             if (last != null) {
                 var lastFloorBounds = getAllBounds(last.Item2);
                 position.x = last.Item1.transform.position.x + lastFloorBounds.extents.x * 2;
