@@ -7,7 +7,9 @@ public class DoubleJumpMask : MonoBehaviour, Mask
 
     public void ApplyAbilities(GameObject player)
     {
-        player.GetComponent<PlayerController>().maxJumps = maskLevel + 1;
+        var controller = player.GetComponent<PlayerController>();
+        controller.maxJumps = maskLevel + 1;
+        controller.jumpsRemaining = controller.jumpsRemaining + maskLevel;
     }
 
     public bool CanApply(GameObject player)

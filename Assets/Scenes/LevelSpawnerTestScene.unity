@@ -348,7 +348,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 356eab94464f3ed47bfa5bbe8706f2e0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
-  move: {x: 3, y: 0, z: 0}
+  move: {x: 7, y: 0, z: 0}
 --- !u!61 &732463996
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -873,7 +873,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -25.96, y: -5, z: 0}
-  m_LocalScale: {x: 15, y: 10, z: 1}
+  m_LocalScale: {x: 25, y: 10, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -1052,11 +1052,6 @@ CapsuleCollider2D:
   m_Offset: {x: 0, y: 0}
   m_Size: {x: 1, y: 1}
   m_Direction: 0
---- !u!212 &1892973754 stripped
-SpriteRenderer:
-  m_CorrespondingSourceObject: {fileID: 6503868526445910585, guid: 2c9349cfa14af844687209928a86d97b, type: 3}
-  m_PrefabInstance: {fileID: 2670515643470611492}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1965809382
 GameObject:
   m_ObjectHideFlags: 0
@@ -1203,9 +1198,13 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 1676026152684012496, guid: 2c9349cfa14af844687209928a86d97b, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 1.242
+    - target: {fileID: 2053511583143181974, guid: 2c9349cfa14af844687209928a86d97b, type: 3}
+      propertyPath: jumpForce
+      value: 24
+      objectReference: {fileID: 0}
+    - target: {fileID: 2053511583143181974, guid: 2c9349cfa14af844687209928a86d97b, type: 3}
+      propertyPath: moveSpeed
+      value: 15
       objectReference: {fileID: 0}
     - target: {fileID: 4443070262712555240, guid: 2c9349cfa14af844687209928a86d97b, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1247,18 +1246,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 6503868526445910585, guid: 2c9349cfa14af844687209928a86d97b, type: 3}
-      propertyPath: m_SortingOrder
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 7257763414560396336, guid: 2c9349cfa14af844687209928a86d97b, type: 3}
       propertyPath: canvas
       value: 
       objectReference: {fileID: 1421008531}
-    - target: {fileID: 7257763414560396336, guid: 2c9349cfa14af844687209928a86d97b, type: 3}
-      propertyPath: playerMaskVisual
-      value: 
-      objectReference: {fileID: 1892973754}
+    - target: {fileID: 7330170256330553469, guid: 2c9349cfa14af844687209928a86d97b, type: 3}
+      propertyPath: m_GravityScale
+      value: 8
+      objectReference: {fileID: 0}
     - target: {fileID: 9069563807208065718, guid: 2c9349cfa14af844687209928a86d97b, type: 3}
       propertyPath: m_Name
       value: Player
