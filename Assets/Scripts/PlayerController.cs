@@ -107,17 +107,25 @@ public class PlayerController : MonoBehaviour
         // We use Mathf.Abs so that moving left (-1) still counts as "Speed 1"
         anim.SetFloat("Speed", Mathf.Abs(moveInput));
 
-        // Flip the sprite based on the direction of movement
-        if (moveInput > 0)
+        // Check if we need to flip the character
+        if (moveInput > 0 && transform.localScale.x < 0)
         {
-            spriteRenderer.flipX = false; // Facing Right
+            Flip();
         }
-        else if (moveInput < 0)
+        else if (moveInput < 0 && transform.localScale.x > 0)
         {
-            spriteRenderer.flipX = true; // Facing Left
+            Flip();
         }
     }
     // Update the LineRenderer to show teleport range
+
+    private void Flip()
+    {
+        // Multiply the player's x local scale by -1.
+        Vector3 localScale = transform.localScale;
+        localScale.x *= -1;
+        transform.localScale = localScale;
+    }
     private void UpdateRangeVisual()
     {
         if (rangeRenderer == null) return;

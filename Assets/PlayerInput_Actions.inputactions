@@ -203,6 +203,17 @@
                 },
                 {
                     "name": "",
+                    "id": "c3d6e1b4-5a70-4040-9f72-8d883b835647",
+                    "path": "<Touchscreen>/primaryTouch/tap",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Touch",
+                    "action": "Teleport",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
                     "id": "c03df70a-c07e-4926-88f9-09227b5cb9c1",
                     "path": "<Keyboard>/w",
                     "interactions": "",
