@@ -160,53 +160,53 @@ public class PlayerController : MonoBehaviour
     // This method is called by the Player Input component
     public void OnTeleport(InputValue value)
     {
-        // Only trigger if the bool is on and the button was just pressed
-        if (!canTeleport || !value.isPressed || teleportTimer > 0) return;
-        Vector2 mousePos = Mouse.current.position.ReadValue();
-        Debug.Log($"<color=cyan>Teleporting!</color> Mouse Screen Pos: {mousePos}");
-        ExecuteTeleport();
+        // 1. Only trigger on the "down" press
+        if (!value.isPressed) return;
+
+        // 2. Standard cooldown and state checks
+        if (!canTeleport || teleportTimer > 0) return;
+
+        // 3. Get the position from the Pointer (Works for Mouse AND Touch)
+        if (Pointer.current != null)
+        {
+            Vector2 screenPos = Pointer.current.position.ReadValue();
+            ExecuteTeleport(screenPos);
+        }
     }
 
-    private void ExecuteTeleport()
+    private void ExecuteTeleport(Vector2 inputScreenPos)
     {
-        // 1. Calculate Target Position
-        Vector2 mouseScreenPos = Mouse.current.position.ReadValue();
-        Vector3 worldPoint = mainCamera.ScreenToWorldPoint(new Vector3(mouseScreenPos.x, mouseScreenPos.y, Mathf.Abs(mainCamera.transform.position.z)));
+        // Convert the screen tap/click to a world position
+        Vector3 worldPoint = mainCamera.ScreenToWorldPoint(new Vector3(
+            inputScreenPos.x,
+            inputScreenPos.y,
+            Mathf.Abs(mainCamera.transform.position.z)
+        ));
+
         Vector2 startPos = rb.position;
-        Vector2 rawTargetPos = (Vector2)worldPoint;
+        Vector2 finalTarget = (Vector2)worldPoint;
 
-        // Clamp to max distance
-        Vector2 direction = rawTargetPos - startPos;
+        // Clamp distance logic
+        Vector2 direction = finalTarget - startPos;
         float distance = Mathf.Min(direction.magnitude, maxTeleportDistance);
-        Vector2 finalTarget = startPos + (direction.normalized * distance);
+        finalTarget = startPos + (direction.normalized * distance);
 
-        // 2. The "Trace Back" logic
-        // We check if the player's shape (OverlapCircle) would hit anything at the destination
-        float playerRadius = 0.4f; // Adjust to match your player's width
+        // Collision safety check (Trace back logic)
+        float playerRadius = 0.4f;
         int safetyBreak = 0;
-
-        // While the target position is inside an obstacle, move it back toward the player
         while (Physics2D.OverlapCircle(finalTarget, playerRadius, obstacleLayer) && safetyBreak < 100)
         {
-            // Move back by a small step (e.g., 0.1 units)
             finalTarget = Vector2.MoveTowards(finalTarget, startPos, 0.1f);
-            safetyBreak++; // Prevent infinite loops
+            safetyBreak++;
         }
 
-        // 3. Spawn effect at the START position
+        // Apply movement
         SpawnTeleportEffect(startPos);
-
-        // 4. Move the player
         rb.position = finalTarget;
         rb.linearVelocity = Vector2.zero;
-
-        Debug.Log($"<color=cyan>Teleported.</color> Distance adjusted by {safetyBreak * 0.1f} units to avoid collision.");
-        // 5. Spawn effect at the END position
         SpawnTeleportEffect(finalTarget);
 
         teleportTimer = teleportCooldown;
-        Debug.Log($"Teleported. Cooldown started: {teleportCooldown}s");
-
     }
 
     private void SpawnTeleportEffect(Vector2 position)
