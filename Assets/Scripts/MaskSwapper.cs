@@ -15,6 +15,8 @@ public class MaskSwapper : MonoBehaviour
 
     public Canvas canvas;
 
+    public SpriteRenderer playerMaskVisual;
+
     private Mask currentMask = null;
     private List<Mask> imasks = new List<Mask>();
     private List<UnityEngine.UI.Image> selectedImages;
@@ -61,6 +63,13 @@ public class MaskSwapper : MonoBehaviour
             currentMask.RemoveAbilities(player);
         if (maskId != -1)
             selectedImages[maskId].enabled = false;
+
+        if (playerMaskVisual != null)
+        {
+            playerMaskVisual.sprite = null;
+            playerMaskVisual.enabled = false;
+        }
+
         maskId = -1;
         currentMask = null;
     }
@@ -97,6 +106,12 @@ public class MaskSwapper : MonoBehaviour
             maskId = i;
             currentMask = imasks[i];
             selectedImages[maskId].enabled = true;
+        }
+
+        if (playerMaskVisual != null)
+        {
+            playerMaskVisual.sprite = currentMask.GetSprite();
+            playerMaskVisual.enabled = true;
         }
     }
 
