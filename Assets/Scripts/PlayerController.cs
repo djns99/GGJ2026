@@ -11,11 +11,10 @@ public class PlayerController : MonoBehaviour
     public AudioClip jumpSound;
     public AudioClip teleportSound;
 
-    [Header("Movement")]
     public float initialMoveSpeed = 15f;
     public float acceleration = 50f;
 
-
+    [SerializeField] private GameObject headObject;
     private float actualMoveSpeed = 15f;
 
 
@@ -198,7 +197,16 @@ public class PlayerController : MonoBehaviour
         Vector3 localScale = transform.localScale;
         localScale.x *= -1;
         transform.localScale = localScale;
+
+        if (headObject != null)
+        {
+            Vector3 headScale = headObject.transform.localScale;
+            headScale.x *= -1;
+            headObject.transform.localScale = headScale;
+        }
+
     }
+
     private void UpdateRangeVisual()
     {
         if (rangeRenderer == null) return;
