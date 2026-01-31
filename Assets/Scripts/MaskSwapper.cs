@@ -82,10 +82,10 @@ public class MaskSwapper : MonoBehaviour
         }
     }
 
-    public void OnPointerDownDelegate(PointerEventData data)
+    public void OnUIMaskElementClicked(GameObject maskClicked)
     {
         Debug.Log("Clicked");
-        GetComponent<MaskSwapper>().ProcessMaskRequest(Int32.Parse(gameObject.name.Last().ToString()) - 1, false);
+        GetComponent<MaskSwapper>().ProcessMaskRequest(Int32.Parse(maskClicked.name.Last().ToString()) - 1, false);
     }
 
     public void ProcessMaskRequest(int i, bool enabled)

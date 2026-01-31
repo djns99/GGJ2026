@@ -280,7 +280,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::MaskSwapper
   maskId: -1
   player: {fileID: 9069563807208065718}
-  canvas: {fileID: 0}
+  canvas: {fileID: 6721169305078032225, guid: 687ecca46c4335f4f92232360846d072, type: 3}
 --- !u!120 &6099423000409525949
 LineRenderer:
   serializedVersion: 3
