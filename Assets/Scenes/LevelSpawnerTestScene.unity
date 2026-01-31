@@ -119,11 +119,6 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
---- !u!1 &54032419 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 9069563807208065718, guid: 2c9349cfa14af844687209928a86d97b, type: 3}
-  m_PrefabInstance: {fileID: 2670515643470611492}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &705332483
 GameObject:
   m_ObjectHideFlags: 0
@@ -193,7 +188,7 @@ MonoBehaviour:
   m_StreamingVersion: 20241001
   m_LegacyPriority: 0
   Target:
-    TrackingTarget: {fileID: 854880648}
+    TrackingTarget: {fileID: 801447035}
     LookAtTarget: {fileID: 0}
     CustomLookAtTarget: 0
   Lens:
@@ -225,7 +220,7 @@ Transform:
   m_GameObject: {fileID: 705332483}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.23, z: -10}
+  m_LocalPosition: {x: 0, y: 0.23, z: -10.14494}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -247,9 +242,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 775b2e930947196458baedc2780f3a09, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MusicManager
---- !u!4 &854880648 stripped
+--- !u!1 &801447023 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3801854771590989409, guid: 2c9349cfa14af844687209928a86d97b, type: 3}
+  m_PrefabInstance: {fileID: 2670515643470611492}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &801447035 stripped
 Transform:
-  m_CorrespondingSourceObject: {fileID: 4443070262712555240, guid: 2c9349cfa14af844687209928a86d97b, type: 3}
+  m_CorrespondingSourceObject: {fileID: 6518145989325892656, guid: 2c9349cfa14af844687209928a86d97b, type: 3}
   m_PrefabInstance: {fileID: 2670515643470611492}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1299429028
@@ -320,11 +320,11 @@ PrefabInstance:
     - target: {fileID: 410425641544948067, guid: 687ecca46c4335f4f92232360846d072, type: 3}
       propertyPath: m_Delegates.Array.data[0].callback.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 1979952940}
+      objectReference: {fileID: 0}
     - target: {fileID: 6190791098600954681, guid: 687ecca46c4335f4f92232360846d072, type: 3}
       propertyPath: m_Delegates.Array.data[0].callback.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 1979952940}
+      objectReference: {fileID: 0}
     - target: {fileID: 6787195350584408837, guid: 687ecca46c4335f4f92232360846d072, type: 3}
       propertyPath: m_Name
       value: InGameUI
@@ -332,7 +332,7 @@ PrefabInstance:
     - target: {fileID: 7629849658500525259, guid: 687ecca46c4335f4f92232360846d072, type: 3}
       propertyPath: m_Delegates.Array.data[0].callback.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 1979952940}
+      objectReference: {fileID: 0}
     - target: {fileID: 8702993908862202924, guid: 687ecca46c4335f4f92232360846d072, type: 3}
       propertyPath: m_Pivot.x
       value: 0
@@ -416,7 +416,7 @@ PrefabInstance:
     - target: {fileID: 9157782705326012862, guid: 687ecca46c4335f4f92232360846d072, type: 3}
       propertyPath: m_Delegates.Array.data[0].callback.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 1979952940}
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -594,7 +594,7 @@ Transform:
   m_GameObject: {fileID: 1478127765}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.23, z: -10}
+  m_LocalPosition: {x: 0, y: 0.23, z: -10.14494}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -803,17 +803,6 @@ MonoBehaviour:
   m_ShadowLayerMask: 1
   m_RenderingLayers: 1
   m_ShadowRenderingLayers: 1
---- !u!114 &1979952940 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 7257763414560396336, guid: 2c9349cfa14af844687209928a86d97b, type: 3}
-  m_PrefabInstance: {fileID: 2670515643470611492}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 54032419}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9b6de724bb25a4e4aa98f7a309e772cc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::MaskSwapper
 --- !u!1001 &1985007696
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1064,7 +1053,7 @@ PrefabInstance:
     - target: {fileID: 7087266206920844370, guid: e41002b915816f540ab1f4770986d814, type: 3}
       propertyPath: player
       value: 
-      objectReference: {fileID: 54032419}
+      objectReference: {fileID: 801447023}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
