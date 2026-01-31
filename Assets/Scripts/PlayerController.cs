@@ -22,8 +22,13 @@ public class PlayerController : MonoBehaviour
     [Header("Teleportation")]
     public bool canTeleport = true;
     public float maxTeleportDistance = 5f;
-    // Useful if you want teleport to ignore certain layers (like triggers)
     public LayerMask obstacleLayer;
+    // Useful if you want teleport to ignore certain layers (like triggers)
+
+    [Header("Teleport Visuals")]
+    public LineRenderer rangeRenderer; // Drag your LineRenderer here
+    public int segments = 50;
+    public GameObject teleportEffectPrefab; // Drag your prefab here
 
     private Rigidbody2D rb;
     private Camera mainCamera;
@@ -38,6 +43,15 @@ public class PlayerController : MonoBehaviour
     {
         rb = GetComponent<Rigidbody2D>();
         mainCamera = Camera.main;
+    }
+    void Start()
+    {
+        // Initialize the LineRenderer if it's assigned
+        if (rangeRenderer != null)
+        {
+            rangeRenderer.positionCount = segments;
+            rangeRenderer.useWorldSpace = true;
+        }
     }
 
     void Update()
@@ -71,7 +85,35 @@ public class PlayerController : MonoBehaviour
                 ExecuteJump();
             }
         }
+
+        // 3. Update Teleport Range Visual
+        UpdateRangeVisual();
     }
+    // Update the LineRenderer to show teleport range
+    private void UpdateRangeVisual()
+    {
+        if (rangeRenderer == null) return;
+
+        // Only show the ring if teleporting is enabled
+        rangeRenderer.enabled = canTeleport;
+
+        if (canTeleport)
+        {
+            float angle = 0f;
+            for (int i = 0; i < segments; i++)
+            {
+                // Calculate point on a circle using Sine and Cosine
+                float x = Mathf.Cos(angle) * maxTeleportDistance;
+                float y = Mathf.Sin(angle) * maxTeleportDistance;
+
+                // Set the position relative to the player
+                rangeRenderer.SetPosition(i, new Vector3(rb.position.x + x, rb.position.y + y, 0));
+
+                angle += (2f * Mathf.PI) / segments;
+            }
+        }
+    }
+
     // This method is called by the Player Input component
     public void OnTeleport(InputValue value)
     {
@@ -84,36 +126,52 @@ public class PlayerController : MonoBehaviour
 
     private void ExecuteTeleport()
     {
-        // 1. Get Mouse position accurately
+        // 1. Calculate Target Position
         Vector2 mouseScreenPos = Mouse.current.position.ReadValue();
         Vector3 worldPoint = mainCamera.ScreenToWorldPoint(new Vector3(mouseScreenPos.x, mouseScreenPos.y, Mathf.Abs(mainCamera.transform.position.z)));
-        Vector2 targetPos = (Vector2)worldPoint;
-
-        // 2. Calculate direction and clamp to max distance
         Vector2 startPos = rb.position;
-        Vector2 direction = targetPos - startPos;
+        Vector2 rawTargetPos = (Vector2)worldPoint;
+
+        // Clamp to max distance
+        Vector2 direction = rawTargetPos - startPos;
         float distance = Mathf.Min(direction.magnitude, maxTeleportDistance);
-        direction.Normalize();
-        Debug.DrawLine(startPos, rb.position, Color.magenta, 2f);
-        // 3. Raycast to find obstacles (The "Trace Back")
-        // We use a small radius (CircleCast) instead of a thin line (Raycast) 
-        // to ensure the player's whole body fits in the destination.
-        float playerSize = 0.4f; // Adjust based on your character's width
-        RaycastHit2D hit = Physics2D.CircleCast(startPos, playerSize, direction, distance, obstacleLayer);
+        Vector2 finalTarget = startPos + (direction.normalized * distance);
 
-        if (hit.collider != null)
+        // 2. The "Trace Back" logic
+        // We check if the player's shape (OverlapCircle) would hit anything at the destination
+        float playerRadius = 0.4f; // Adjust to match your player's width
+        int safetyBreak = 0;
+
+        // While the target position is inside an obstacle, move it back toward the player
+        while (Physics2D.OverlapCircle(finalTarget, playerRadius, obstacleLayer) && safetyBreak < 100)
         {
-            // If we hit a wall, stop just before the hit point
-            rb.position = startPos + (direction * (hit.distance - 0.1f));
-        }
-        else
-        {
-            // Clear path, move the full allowed distance
-            rb.position = startPos + (direction * distance);
+            // Move back by a small step (e.g., 0.1 units)
+            finalTarget = Vector2.MoveTowards(finalTarget, startPos, 0.1f);
+            safetyBreak++; // Prevent infinite loops
         }
 
-        // Kill momentum to prevent clipping through things after arrival
+        // 3. Spawn effect at the START position
+        SpawnTeleportEffect(startPos);
+
+        // 4. Move the player
+        rb.position = finalTarget;
         rb.linearVelocity = Vector2.zero;
+
+        Debug.Log($"<color=cyan>Teleported.</color> Distance adjusted by {safetyBreak * 0.1f} units to avoid collision.");
+        // 5. Spawn effect at the END position
+        SpawnTeleportEffect(finalTarget);
+    }
+
+    private void SpawnTeleportEffect(Vector2 position)
+    {
+        if (teleportEffectPrefab != null)
+        {
+            // Create the particles
+            GameObject effect = Instantiate(teleportEffectPrefab, position, Quaternion.identity);
+
+            // Destroy the object after 1 second so it doesn't clutter the hierarchy
+            Destroy(effect, 1f);
+        }
     }
 
     void FixedUpdate()
