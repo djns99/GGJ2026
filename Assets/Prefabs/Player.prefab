@@ -160,6 +160,8 @@ MonoBehaviour:
   obstacleLayer:
     serializedVersion: 2
     m_Bits: 8
+  teleportCooldown: 3
+  teleportTimer: 0
   rangeRenderer: {fileID: 6099423000409525949}
   segments: 50
   teleportEffectPrefab: {fileID: 3331822424110829512, guid: 9703da99d75d1ac4bac6f62fa38836da, type: 3}
@@ -281,7 +283,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::MaskSwapper
   maskId: -1
   player: {fileID: 9069563807208065718}
-  canvas: {fileID: 6721169305078032225, guid: 687ecca46c4335f4f92232360846d072, type: 3}
+  canvas: {fileID: 0}
 --- !u!120 &6099423000409525949
 LineRenderer:
   serializedVersion: 3
