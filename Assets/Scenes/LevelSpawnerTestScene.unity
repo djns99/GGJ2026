@@ -1034,6 +1034,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: ChaserObject
       objectReference: {fileID: 0}
+    - target: {fileID: 2001309277242997414, guid: e41002b915816f540ab1f4770986d814, type: 3}
+      propertyPath: m_TagString
+      value: Chaser
+      objectReference: {fileID: 0}
     - target: {fileID: 4064795641333123704, guid: e41002b915816f540ab1f4770986d814, type: 3}
       propertyPath: m_LocalPosition.x
       value: -6.1
