@@ -5,6 +5,9 @@ public class DoubleJumpMask : MonoBehaviour, Mask
     public int maskId = 0;
     public int maskLevel = 1;
 
+    public AudioClip maskMusic;
+    public AudioClip GetMaskMusic() => maskMusic;
+
     public void ApplyAbilities(GameObject player)
     {
         var controller = player.GetComponent<PlayerController>();

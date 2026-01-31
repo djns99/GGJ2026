@@ -377,6 +377,8 @@ MonoBehaviour:
   player: {fileID: 9069563807208065718}
   canvas: {fileID: 0}
   playerMaskVisual: {fileID: 6503868526445910585}
+  musicManager: {fileID: 0}
+  defaultMusic: {fileID: 8300000, guid: 6637475bfea81554e87ac42bb147efeb, type: 3}
 --- !u!120 &6099423000409525949
 LineRenderer:
   serializedVersion: 3
@@ -505,6 +507,7 @@ MonoBehaviour:
   - 10
   - 5
   - 3
+  maskMusic: {fileID: 0}
 --- !u!114 &7330981621129028735
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -519,6 +522,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::DoubleJumpMask
   maskId: 0
   maskLevel: 1
+  maskMusic: {fileID: 8300000, guid: ea3d40112853bef4e92b1e55398ff951, type: 3}
 --- !u!95 &4026758947681866145
 Animator:
   serializedVersion: 7

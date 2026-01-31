@@ -21,6 +21,9 @@ public class MaskSwapper : MonoBehaviour
     private List<Mask> imasks = new List<Mask>();
     private List<UnityEngine.UI.Image> selectedImages;
 
+    public MusicManager musicManager; // Drag your MusicManager here
+    public AudioClip defaultMusic;     // Music for when no mask is worn
+
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -55,6 +58,11 @@ public class MaskSwapper : MonoBehaviour
         selectedImages.Sort((a, b) => a.name.CompareTo(b.name));
         selectedImages.ForEach(x => x.enabled = false);
         Debug.Log("Found " + selectedImages.Count + " selected element UI items");
+
+        if (musicManager != null && defaultMusic != null)
+        {
+            musicManager.SwapMusic(defaultMusic);
+        }
     }
 
     void removeCurrentMask()
@@ -72,6 +80,8 @@ public class MaskSwapper : MonoBehaviour
 
         maskId = -1;
         currentMask = null;
+        
+        musicManager.SwapMusic(defaultMusic);
     }
 
     // Update is called once per frame
@@ -106,6 +116,8 @@ public class MaskSwapper : MonoBehaviour
             maskId = i;
             currentMask = imasks[i];
             selectedImages[maskId].enabled = true;
+            
+            musicManager.SwapMusic(imasks[i].GetMaskMusic());
         }
 
         if (playerMaskVisual != null)

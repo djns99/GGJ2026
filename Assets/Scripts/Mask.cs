@@ -14,4 +14,6 @@ public interface Mask
 
     abstract int GetMaskId();
     abstract void SetMaskId(int id);
+
+    abstract AudioClip GetMaskMusic();
 }
