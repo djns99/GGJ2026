@@ -372,12 +372,9 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    void CheckObstacleCollide(Collider2D collision)
     {
-        if (collision == null)
-            return;
-
-        if(collision.CompareTag("Gas") && slowState == SlowState.HEALTHY && hazmat)
+        if (collision.CompareTag("Gas") && slowState == SlowState.HEALTHY && !hazmat)
         {
             slowState = SlowState.SLOWING;
             slowStateTimeRemaining = slowStateTimeSpans[0];
@@ -388,10 +385,26 @@ public class PlayerController : MonoBehaviour
             ReloadGame();
         }
 
-        if(collision.CompareTag("Chaser"))
+        if (collision.CompareTag("Chaser"))
         {
             ReloadGame();
         }
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision == null)
+            return;
+
+        CheckObstacleCollide(collision);
+    }
+
+    private void OnTriggerStay2D(Collider2D collision)
+    {
+        if (collision == null)
+            return;
+
+        CheckObstacleCollide(collision);
     }
 
     private void ReloadGame()
