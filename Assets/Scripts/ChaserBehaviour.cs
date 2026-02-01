@@ -28,7 +28,7 @@ public class ChaserBehaviour : MonoBehaviour
 
             // TODO Get a more intelligent percentage
             var playerController = player.GetComponent<PlayerController>();
-            float speed = Mathf.Lerp(chaserStartSpeed, playerController.CurrentMaxMoveSpeed, player.gameObject.transform.position.x / playerController.targetDistance);
+            float speed = Mathf.Lerp(chaserStartSpeed, playerController.initialMoveSpeed * 1.1f, player.gameObject.transform.position.x / playerController.targetDistance);
 
             transform.position -= Vector3.left * speed * Time.deltaTime;
         }
