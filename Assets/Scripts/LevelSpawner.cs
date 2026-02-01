@@ -35,7 +35,7 @@ public class LevelSpawner : MonoBehaviour
 
 
     private int nextMaskId = 0;
-    private int numMasks = 4;
+    private int numMasks = 3;
 
 
 

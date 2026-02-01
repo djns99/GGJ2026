@@ -54,6 +54,8 @@ MonoBehaviour:
   - {fileID: 3614625579709860514, guid: 1acffc9673dacf9418b1c05b2a14b2a3, type: 3}
   - {fileID: 7767199389709060208, guid: ff053f4928cb23a4d9c17585eaa812d6, type: 3}
   - {fileID: 2889887013219487258, guid: 85df892a3f8b45648a6cf1e6f2d7aa7d, type: 3}
+  maskCollectorObstacle: {fileID: 1855521117684914852, guid: d2869ff019ecf0045a0444d2a8f84fa8, type: 3}
+  player: {fileID: 0}
   chaserTransform: {fileID: 0}
   cameraObject: {fileID: 0}
   spawnBuffer: 10

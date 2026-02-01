@@ -12,6 +12,10 @@ public class HazmatMask : MonoBehaviour, Mask
 
     private float oldSlowedSpeed = -1.0f;
 
+    public bool maskCollected = false;
+
+
+
     public void ApplyAbilities(GameObject player)
     {
         var controller = player.GetComponent<PlayerController>();
@@ -22,7 +26,7 @@ public class HazmatMask : MonoBehaviour, Mask
 
     public bool CanApply(GameObject player)
     {
-        return true;
+        return maskCollected;
     }
 
     public int GetMaskId()
@@ -77,6 +81,7 @@ public class HazmatMask : MonoBehaviour, Mask
     public void Collect(GameObject player)
     {
         OnMaskCollect?.Invoke(maskWorth);
+        maskCollected = true;
         Debug.Log("Double Jump Mask Collected!");
     }
 }

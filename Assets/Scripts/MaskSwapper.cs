@@ -21,6 +21,7 @@ public class MaskSwapper : MonoBehaviour
     private Mask currentMask = null;
     [DoNotSerialize]
     public List<Mask> imasks = new List<Mask>();
+    private List<UnityEngine.UI.Image> maskIcons = new List<UnityEngine.UI.Image>();
     private List<UnityEngine.UI.Image> selectedImages;
 
     public MusicManager musicManager; // Drag your MusicManager here
@@ -39,6 +40,7 @@ public class MaskSwapper : MonoBehaviour
         imasks.Sort((a, b) => a.GetMaskId().CompareTo(b.GetMaskId()));
         Debug.LogWarning("Found masks " + imasks.Count);
         var maskUiItems = canvas.GetComponentsInChildren<UnityEngine.UI.Image>();
+
         for (int i = 0; i < imasks.Count; i++ )
         {
             foreach(var item in maskUiItems)
@@ -51,6 +53,14 @@ public class MaskSwapper : MonoBehaviour
                     Debug.Log("Set mask " + item.gameObject.name + " mask " + imasks[i].GetSprite());
                     item.sprite = maskSprite;
                     item.color = Color.white;
+
+                    if (!imasks[i].CanApply(player))
+                    {
+                        item.enabled = false;
+                    }
+
+                    maskIcons.Add(item);
+
                     break;
                 }
             }
@@ -92,6 +102,14 @@ public class MaskSwapper : MonoBehaviour
         if(currentMask != null && currentMask.ShouldRemove(player))
         {
             removeCurrentMask();
+        }
+
+        for (int i = 0; i < imasks.Count; i++)
+        {
+            if (currentMask != imasks[i])
+            {
+                maskIcons[i].enabled = imasks[i].CanApply(player);
+            }
         }
     }
 

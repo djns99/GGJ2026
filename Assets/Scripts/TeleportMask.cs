@@ -10,6 +10,9 @@ public class TeleportMask : MonoBehaviour, Mask
 
     public List<float> cooldownLengths = new List<float>{ 10f, 5f, 3f };
 
+
+    public bool maskCollected = false;
+
     public AudioClip maskMusic;
     public AudioClip GetMaskMusic() => maskMusic;
     public static event Action<int> OnMaskCollect;
@@ -23,7 +26,7 @@ public class TeleportMask : MonoBehaviour, Mask
     public bool CanApply(GameObject player)
     {
         // TODO Query if we have a limited number of uses per run
-        return true;
+        return maskCollected;
     }
 
     public Sprite GetSprite()
@@ -47,6 +50,7 @@ public class TeleportMask : MonoBehaviour, Mask
     public void Collect(GameObject player)
     {
         OnMaskCollect?.Invoke(maskWorth);
+        maskCollected = true;
         Debug.Log("Double Jump Mask Collected!");
     }
 }

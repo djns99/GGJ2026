@@ -159,6 +159,7 @@ GameObject:
   - component: {fileID: 2613975994650267149}
   - component: {fileID: 1457958582430974916}
   - component: {fileID: 4213706552724525548}
+  - component: {fileID: 4975823214757398090}
   - component: {fileID: 2251643436244637702}
   - component: {fileID: 6961750145040488913}
   m_Layer: 0
@@ -280,6 +281,8 @@ MonoBehaviour:
   rangeRenderer: {fileID: 2613975994650267149}
   segments: 50
   teleportEffectPrefab: {fileID: 3331822424110829512, guid: 9703da99d75d1ac4bac6f62fa38836da, type: 3}
+  hazmat: 0
+  targetDistance: 180
   jumpsRemaining: 0
   slowStateTimeSpans:
   - 0.5
@@ -532,10 +535,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::TeleportMask
   maskId: 1
   maskLevel: 1
+  maskWorth: 20
   cooldownLengths:
   - 10
   - 5
   - 3
+  maskCollected: 0
   maskMusic: {fileID: 0}
 --- !u!114 &4213706552724525548
 MonoBehaviour:
@@ -551,7 +556,25 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::DoubleJumpMask
   maskId: 0
   maskLevel: 1
+  maskWorth: 20
+  maskCollected: 0
   maskMusic: {fileID: 8300000, guid: ea3d40112853bef4e92b1e55398ff951, type: 3}
+--- !u!114 &4975823214757398090
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3801854771590989409}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9d3ab9d84ac4c154a9a673c53a453478, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::HazmatMask
+  maskId: 2
+  hazmatSlowedSpeed: 10
+  maskWorth: 20
+  maskCollected: 0
 --- !u!95 &2251643436244637702
 Animator:
   serializedVersion: 7

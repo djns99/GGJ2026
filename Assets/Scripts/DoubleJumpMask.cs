@@ -7,6 +7,8 @@ public class DoubleJumpMask : MonoBehaviour, Mask
     public int maskLevel = 1;
     public int maskWorth = 20;
 
+    public bool maskCollected = false;
+
     public AudioClip maskMusic;
     public AudioClip GetMaskMusic() => maskMusic;
 
@@ -20,7 +22,7 @@ public class DoubleJumpMask : MonoBehaviour, Mask
 
     public bool CanApply(GameObject player)
     {
-        return true;
+        return maskCollected;
     }
 
     public Sprite GetSprite()
@@ -46,6 +48,7 @@ public class DoubleJumpMask : MonoBehaviour, Mask
     public void Collect(GameObject player)
     {
         OnMaskCollect?.Invoke(maskWorth);
+        maskCollected = true;
         Debug.Log("Double Jump Mask Collected!");
     }
 }
