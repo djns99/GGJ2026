@@ -265,6 +265,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HazmatMask
   maskId: 2
+  maskWorth: 20
 --- !u!1001 &1299429028
 PrefabInstance:
   m_ObjectHideFlags: 0
