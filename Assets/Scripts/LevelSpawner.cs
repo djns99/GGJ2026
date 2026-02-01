@@ -94,6 +94,11 @@ public class LevelSpawner : MonoBehaviour
             return mask;
         }
 
+        if(parent.transform.position.x >= player.GetComponent<PlayerController>().targetDistance)
+        {
+            return null;
+        }
+
 
         // Skip obstacle on the first item, or if the previous obstacle was wide
         if (lastSection == null || lifetimeSpawns < numEmptyZones || (lastSection.Item3 != null && lastSection.Item3.tag == "wide"))
