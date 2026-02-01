@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
@@ -18,7 +19,8 @@ public class MaskSwapper : MonoBehaviour
     public SpriteRenderer playerMaskVisual;
 
     private Mask currentMask = null;
-    private List<Mask> imasks = new List<Mask>();
+    [DoNotSerialize]
+    public List<Mask> imasks = new List<Mask>();
     private List<UnityEngine.UI.Image> selectedImages;
 
     public MusicManager musicManager; // Drag your MusicManager here

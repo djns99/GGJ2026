@@ -265,6 +265,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HazmatMask
   maskId: 2
+  hazmatSlowedSpeed: 10
   maskWorth: 20
 --- !u!1001 &1299429028
 PrefabInstance:
@@ -1011,6 +1012,10 @@ PrefabInstance:
       value: LevelSpawnerObject
       objectReference: {fileID: 0}
     - target: {fileID: 2931163402400321769, guid: dd6fd1d7cce1d444ab5437bb760d1194, type: 3}
+      propertyPath: player
+      value: 
+      objectReference: {fileID: 801447023}
+    - target: {fileID: 2931163402400321769, guid: dd6fd1d7cce1d444ab5437bb760d1194, type: 3}
       propertyPath: cameraObject
       value: 
       objectReference: {fileID: 1478127767}
@@ -1018,6 +1023,18 @@ PrefabInstance:
       propertyPath: chaserTransform
       value: 
       objectReference: {fileID: 732463999}
+    - target: {fileID: 2931163402400321769, guid: dd6fd1d7cce1d444ab5437bb760d1194, type: 3}
+      propertyPath: maskCollectorObstacle
+      value: 
+      objectReference: {fileID: 1855521117684914852, guid: d2869ff019ecf0045a0444d2a8f84fa8, type: 3}
+    - target: {fileID: 2931163402400321769, guid: dd6fd1d7cce1d444ab5437bb760d1194, type: 3}
+      propertyPath: obstacleTypes.Array.size
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 2931163402400321769, guid: dd6fd1d7cce1d444ab5437bb760d1194, type: 3}
+      propertyPath: 'obstacleTypes.Array.data[6]'
+      value: 
+      objectReference: {fileID: 1855521117684914852, guid: d2869ff019ecf0045a0444d2a8f84fa8, type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

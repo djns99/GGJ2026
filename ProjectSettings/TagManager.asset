@@ -8,6 +8,7 @@ TagManager:
   - Hazard
   - Gas
   - Chaser
+  - MaskPickup
   layers:
   - Default
   - TransparentFX

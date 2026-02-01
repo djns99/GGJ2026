@@ -12,6 +12,10 @@ public class LevelSpawner : MonoBehaviour
     public GameObject parentType;
     public List<GameObject> floorTypes;
     public List<GameObject> obstacleTypes;
+
+    public GameObject maskCollectorObstacle;
+    public GameObject player;
+
     public Transform chaserTransform;
     public Camera cameraObject;
     public int spawnBuffer = 1000;
@@ -28,6 +32,12 @@ public class LevelSpawner : MonoBehaviour
     private float cameraWidth = 0f;
     private float cameraHeight = 0f;
     private float cameraBottomPosition = 0f;
+
+
+    private int nextMaskId = 0;
+    private int numMasks = 4;
+
+
 
     void Start()
     {
@@ -64,10 +74,29 @@ public class LevelSpawner : MonoBehaviour
         return bounds;
     }
 
+    float getNextMaskXCoord()
+    {
+        var spacing = player.GetComponent<PlayerController>().targetDistance / (numMasks + 1);
+        return (nextMaskId + 1) * spacing;
+    }
+
     GameObject attachObstacle(GameObject parent, GameObject currentFloor, SectionTuple lastSection)
     {
+        if(parent.transform.position.x > getNextMaskXCoord() && nextMaskId < numMasks)
+        {
+            var mask = Instantiate(maskCollectorObstacle, parent.transform);
+            mask.transform.localPosition = Vector3.zero;
+            mask.GetComponentInChildren<MaskIdCache>().id = nextMaskId;
+            var renderer = mask.GetComponentInChildren<SpriteRenderer>();
+            Mask imask = player.GetComponent<MaskSwapper>().imasks[nextMaskId];
+            renderer.sprite = imask.GetSprite();
+            nextMaskId++;
+            return mask;
+        }
+
+
         // Skip obstacle on the first item, or if the previous obstacle was wide
-        if(lastSection == null || lifetimeSpawns < numEmptyZones || (lastSection.Item3 != null && lastSection.Item3.tag == "wide"))
+        if (lastSection == null || lifetimeSpawns < numEmptyZones || (lastSection.Item3 != null && lastSection.Item3.tag == "wide"))
         {
             return null; // Previous obstacle is extra wide
         }

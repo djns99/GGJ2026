@@ -62,6 +62,9 @@ public class PlayerController : MonoBehaviour
     [Header("Hazmat")]
     public bool hazmat = false;
 
+    [Header("Winning")]
+    public float targetDistance = 180f;
+
     private Rigidbody2D rb;
     private Camera mainCamera;
     private float moveInput;
@@ -396,6 +399,20 @@ public class PlayerController : MonoBehaviour
     {
         if (collision == null)
             return;
+
+        if(collision.CompareTag("MaskPickup"))
+        {
+            var component = collision.gameObject.GetComponentInChildren<MaskIdCache>();
+            if( component == null )
+            {
+                component = collision.gameObject.GetComponent<MaskIdCache>();
+            }
+            if (component != null)
+            {
+                Destroy(component.gameObject);
+                GetComponent<MaskSwapper>().imasks[component.id].Collect(gameObject);
+            }
+        }
 
         CheckObstacleCollide(collision);
     }
