@@ -387,7 +387,8 @@ public class PlayerController : MonoBehaviour
 
         if (collision.CompareTag("Chaser"))
         {
-            ReloadGame();
+            SceneManager.LoadScene("EndScene");
+            //ReloadGame();
         }
     }
 
