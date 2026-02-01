@@ -905,7 +905,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3665999281828338988, guid: 2c9349cfa14af844687209928a86d97b, type: 3}
       propertyPath: targetDistance
-      value: 120
+      value: 1200
       objectReference: {fileID: 0}
     - target: {fileID: 3665999281828338988, guid: 2c9349cfa14af844687209928a86d97b, type: 3}
       propertyPath: touchPositionReference
@@ -1061,6 +1061,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 131181262132400765, guid: 687ecca46c4335f4f92232360846d072, type: 3}
+      propertyPath: m_ControlPath
+      value: <Keyboard>/e
+      objectReference: {fileID: 0}
     - target: {fileID: 1680719323641967040, guid: 687ecca46c4335f4f92232360846d072, type: 3}
       propertyPath: chaser
       value: 
