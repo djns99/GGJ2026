@@ -41,7 +41,7 @@ public class HazmatMask : MonoBehaviour, Mask
 
     public Sprite GetSprite()
     {
-        return null;
+        return Resources.Load<Sprite>("Sprites/Player-hazmat-head");
     }
 
     public void RemoveAbilities(GameObject player)
