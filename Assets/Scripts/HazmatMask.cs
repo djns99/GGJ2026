@@ -5,13 +5,19 @@ using UnityEngine;
 public class HazmatMask : MonoBehaviour, Mask
 {
     public int maskId = 2;
+    public float hazmatSlowedSpeed = 10f;
 
     public int maskWorth = 20;
     public static event Action<int> OnMaskCollect;
 
+    private float oldSlowedSpeed = -1.0f;
+
     public void ApplyAbilities(GameObject player)
     {
-        player.GetComponent<PlayerController>().hazmat = true;
+        var controller = player.GetComponent<PlayerController>();
+        controller.hazmat = true;
+        oldSlowedSpeed = controller.CurrentMaxMoveSpeed;
+        controller.CurrentMaxMoveSpeed = hazmatSlowedSpeed;
     }
 
     public bool CanApply(GameObject player)
@@ -36,7 +42,14 @@ public class HazmatMask : MonoBehaviour, Mask
 
     public void RemoveAbilities(GameObject player)
     {
-        player.GetComponent<PlayerController>().hazmat = false;
+        var controller = player.GetComponent<PlayerController>();
+        controller.hazmat = false;
+        if (oldSlowedSpeed > 0f)
+        {
+            // This means if someone has increased the move speed since we preserve the speed
+            controller.CurrentMaxMoveSpeed = oldSlowedSpeed + (controller.CurrentMaxMoveSpeed - hazmatSlowedSpeed);
+            oldSlowedSpeed = -1.0f;
+        }
     }
 
     public void SetMaskId(int id)
