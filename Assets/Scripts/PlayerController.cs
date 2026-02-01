@@ -106,6 +106,12 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
+        //win
+        if (transform.position.x >= targetDistance)
+        {
+            SceneManager.LoadScene("UI/WINEndScene");
+        }
+
         // 1. Ground Detection
         wasGrounded = isGrounded;
         isGrounded = Physics2D.OverlapBox(groundCheck.position, boxSize, 0, groundLayer);
@@ -386,6 +392,7 @@ public class PlayerController : MonoBehaviour
         if (collision.CompareTag("Hazard") && !hazmat)
         {
             ReloadGame();
+
         }
 
         if (collision.CompareTag("Chaser"))
@@ -427,6 +434,6 @@ public class PlayerController : MonoBehaviour
 
     private void ReloadGame()
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        SceneManager.LoadScene("EndScene");
     }
 }
