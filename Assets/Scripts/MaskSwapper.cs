@@ -132,7 +132,11 @@ public class MaskSwapper : MonoBehaviour
 
     public void ProcessMaskRequest(int i, bool enabled)
     {
-        if (enabled && maskId != i && i < imasks.Count && imasks[i].CanApply(player))
+        if (enabled && maskId == i)
+        {
+            removeCurrentMask();
+        }
+        else if (enabled && maskId != i && i < imasks.Count && imasks[i].CanApply(player))
         {
             removeCurrentMask();
             imasks[i].ApplyAbilities(player);

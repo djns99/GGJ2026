@@ -6,7 +6,9 @@ using UnityEngine.SceneManagement;
 [RequireComponent(typeof(Rigidbody2D))]
 public class PlayerController : MonoBehaviour
 {
-    [Header("Audio")]
+    public InputActionReference touchPositionReference;
+
+    [Header("Audios")]
     public AudioSource playerAudioSource; // Drag your Player's AudioSource here
     public AudioClip jumpSound;
     public AudioClip teleportSound;
@@ -90,6 +92,15 @@ public class PlayerController : MonoBehaviour
         mainCamera = Camera.main;
         anim = GetComponent<Animator>(); // Get the Animator
         spriteRenderer = GetComponent<SpriteRenderer>(); // Get the SpriteRenderer
+    
+        //playerInput = GetComponent<PlayerInput>();
+        //touchPressAction = playerInput.actions["TouchPress"];
+        ////touchPositionAction = playerInput.actions["TouchPosition"];
+        ////touchPressAction.Enable();
+        //if (touchPressAction == null) Debug.LogError("<color=red>touchPressAction not found</color>\" !");
+        //else Debug.Log("<color=red>Found action \"TouchPress\"</color>");
+        //if (touchPositionAction == null) Debug.LogError("<color=red>touchPositionAction Action not found</color>\" !");
+        //else Debug.Log("<color=red>Found action \"touchPositionAction\"</color>");
     }
     void Start()
     {
@@ -104,8 +115,36 @@ public class PlayerController : MonoBehaviour
         actualMoveSpeed = currentMaxMoveSpeed;
     }
 
+    //void OnEnable()
+    //{
+    //    //touchPressAction.actionMap.Enable();
+    //    //touchPressAction.Enable(); // Critical step!
+    //    touchPressAction.performed += TouchPress;
+    //    Debug.Log("<color=red>Enabled</color>");
+    //}
+    //void OnDisable()
+    //{
+    //    touchPressAction.performed -= TouchPress;
+    //    Debug.Log("<color=red>Disabled</color>");
+    //}
+
+    
+
     void Update()
     {
+
+        // DIRECT CHECK: Does the system see a press right now?
+        if (Touchscreen.current != null && Touchscreen.current.primaryTouch.press.wasPressedThisFrame)
+        {
+            Debug.Log("<color=red>Direct Touchscreen Log!</color>");
+        }
+
+        // MOUSE TEST: Since you're likely in the editor
+        if (Mouse.current != null && Mouse.current.leftButton.wasPressedThisFrame)
+        {
+            Debug.Log("<color=blue>Direct Mouse Log!</color>");
+        }
+
         //win
         if (transform.position.x >= targetDistance)
         {
@@ -253,20 +292,20 @@ public class PlayerController : MonoBehaviour
     }
 
     // This method is called by the Player Input component
-    public void OnTeleport(InputValue value)
+    public void OnTouchPress(InputValue value)
     {
+        Debug.Log("<color=green>TouchPress teleport</color>");
         // 1. Only trigger on the "down" press
         if (!value.isPressed) return;
 
         // 2. Standard cooldown and state checks
         if (!canTeleport || teleportTimer > 0) return;
 
-        // 3. Get the position from the Pointer (Works for Mouse AND Touch)
-        if (Pointer.current != null)
-        {
-            Vector2 screenPos = Pointer.current.position.ReadValue();
-            ExecuteTeleport(screenPos);
-        }
+        Debug.Log("<color=green>Trying to teleport</color>");
+        // 1. Get the Vector2 directly from the InputValue
+        Vector2 screenPos = touchPositionReference.action.ReadValue<Vector2>();
+        Debug.Log($"<color=red>Direct Position: {screenPos}</color>");
+        ExecuteTeleport(screenPos);
     }
 
     private void ExecuteTeleport(Vector2 inputScreenPos)
@@ -330,6 +369,12 @@ public class PlayerController : MonoBehaviour
     }
 
     public void OnMove(InputValue value) => moveInput = value.Get<Vector2>().x;
+
+
+    public void OnTouchPosition(InputValue value)
+    {
+        Debug.Log("<color=green>OnTouchPosition</color>");
+    }
 
     public void OnJump(InputValue value)
     {

@@ -21,7 +21,7 @@ public class ChaserBehaviour : MonoBehaviour
     void Update()
     {
         elapsedTime += Time.deltaTime;
-        Debug.Log("Elapsed Time: " + elapsedTime);
+        //Debug.Log("Elapsed Time: " + elapsedTime);
         if (elapsedTime >= chaserDelayTime)
         {
             Debug.Log("Chaser Moving");

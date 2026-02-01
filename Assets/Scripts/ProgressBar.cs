@@ -67,7 +67,7 @@ public class ProgressBar : MonoBehaviour
 
         float playerXPosOnBar = (playerProgress * barWidth);
         float chaserXPosOnBar = (chaserProgress * barWidth);
-        Debug.Log("playerXPosOnBar:" + playerXPosOnBar);
+        //Debug.Log("playerXPosOnBar:" + playerXPosOnBar);
      
         playerAvatar.rectTransform.anchoredPosition = new Vector2(playerXPosOnBar, playerAvatar.rectTransform.anchoredPosition.y);
         chaserAvatar.rectTransform.anchoredPosition = new Vector2(chaserXPosOnBar, chaserAvatar.rectTransform.anchoredPosition.y);
