@@ -267,6 +267,22 @@ MonoBehaviour:
   maskId: 2
   hazmatSlowedSpeed: 10
   maskWorth: 20
+  maskCollected: 0
+--- !u!114 &801447049
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 801447023}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3b17adc4cb46e0241ad58c580198cf53, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SpeedMask
+  maskId: 3
+  maskCollected: 0
+  slowdownFactor: 0.5
 --- !u!1001 &1299429028
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -958,6 +974,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 3801854771590989409, guid: 2c9349cfa14af844687209928a86d97b, type: 3}
       insertIndex: 10
       addedObject: {fileID: 801447036}
+    - targetCorrespondingSourceObject: {fileID: 3801854771590989409, guid: 2c9349cfa14af844687209928a86d97b, type: 3}
+      insertIndex: 12
+      addedObject: {fileID: 801447049}
   m_SourcePrefab: {fileID: 100100000, guid: 2c9349cfa14af844687209928a86d97b, type: 3}
 --- !u!1001 &3066422369667104015
 PrefabInstance:

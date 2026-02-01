@@ -159,7 +159,8 @@ GameObject:
   - component: {fileID: 2613975994650267149}
   - component: {fileID: 1457958582430974916}
   - component: {fileID: 4213706552724525548}
-  - component: {fileID: 4975823214757398090}
+  - component: {fileID: 7783338791992827098}
+  - component: {fileID: 3543494055526955273}
   - component: {fileID: 2251643436244637702}
   - component: {fileID: 6961750145040488913}
   m_Layer: 0
@@ -559,7 +560,7 @@ MonoBehaviour:
   maskWorth: 20
   maskCollected: 0
   maskMusic: {fileID: 8300000, guid: ea3d40112853bef4e92b1e55398ff951, type: 3}
---- !u!114 &4975823214757398090
+--- !u!114 &7783338791992827098
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -575,6 +576,21 @@ MonoBehaviour:
   hazmatSlowedSpeed: 10
   maskWorth: 20
   maskCollected: 0
+--- !u!114 &3543494055526955273
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3801854771590989409}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3b17adc4cb46e0241ad58c580198cf53, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SpeedMask
+  maskId: 3
+  maskCollected: 0
+  slowdownFactor: 0.5
 --- !u!95 &2251643436244637702
 Animator:
   serializedVersion: 7
