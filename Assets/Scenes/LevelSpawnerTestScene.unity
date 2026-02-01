@@ -1048,6 +1048,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1708636441016301326, guid: e41002b915816f540ab1f4770986d814, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2001309277242997414, guid: e41002b915816f540ab1f4770986d814, type: 3}
       propertyPath: m_Name
       value: ChaserObject
