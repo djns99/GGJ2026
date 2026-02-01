@@ -1,8 +1,13 @@
+using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class HazmatMask : MonoBehaviour, Mask
 {
     public int maskId = 2;
+
+    public int maskWorth = 20;
+    public static event Action<int> OnMaskCollect;
 
     public void ApplyAbilities(GameObject player)
     {
@@ -54,5 +59,11 @@ public class HazmatMask : MonoBehaviour, Mask
     void Update()
     {
         
+    }
+
+    public void Collect(GameObject player)
+    {
+        OnMaskCollect?.Invoke(maskWorth);
+        Debug.Log("Double Jump Mask Collected!");
     }
 }
