@@ -109,7 +109,7 @@ public class PlayerController : MonoBehaviour
         //win
         if (transform.position.x >= targetDistance)
         {
-            SceneManager.LoadScene("UI/WINEndScene");
+            SceneManager.LoadScene("WINEndScene");
         }
 
         // 1. Ground Detection
