@@ -8,6 +8,8 @@ public class DropletScript : MonoBehaviour
     private float lifetime = 0.0f;
     private bool dropped = false;
 
+    public GameObject source;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -40,7 +42,18 @@ public class DropletScript : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        // TODO Play a drip sound
-        Destroy(gameObject);
+        if (collision.gameObject != source)
+        {
+            // TODO Play a drip sound
+            Destroy(gameObject);
+        }
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject != source) {
+            // TODO Play a drip sound
+            Destroy(gameObject);
+        }
     }
 }

@@ -46,6 +46,7 @@ public class DripScript : MonoBehaviour
             float pos = UnityEngine.Random.Range(-range, range);
             var drip = Instantiate(dripType);
 
+            drip.GetComponent<DropletScript>().source = gameObject;
             drip.transform.position = gameObject.transform.position + new Vector3(pos, -0.5f, 1f);
 
             timeSinceDrip = 0.0f;
